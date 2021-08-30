@@ -1,0 +1,7 @@
+﻿  Building 'coskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Generating code
+  Finished generating code
+  coskmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\compute-only-sample\ARM64\Release\coskmd.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\compute-only-sample\ARM64\Release\coskmd.sys
+  

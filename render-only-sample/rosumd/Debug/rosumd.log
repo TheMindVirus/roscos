@@ -1,0 +1,14 @@
+﻿  Building 'rosumd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
+  precomp.cpp
+  pixlib.cpp
+  RosUmd.cpp
+  RosUmdAdapter.cpp
+  RosUmdCommandBuffer.cpp
+  RosUmdDevice.cpp
+  RosUmdDeviceDdi.cpp
+  RosUmdResource.cpp
+  RosUmdShader.cpp
+  RosUmdUtil.cpp
+  RosUmdLogging.cpp
+  Generating Code...
+LINK : fatal error LNK1181: cannot open input file 'roscompiler.lib'

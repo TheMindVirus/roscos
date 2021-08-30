@@ -1,0 +1,8 @@
+﻿  Building 'roskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  RosKmdRapAdapter.cpp
+  Generating code
+  Finished generating code
+  roskmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\roskmd.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\roskmd.sys
+  
