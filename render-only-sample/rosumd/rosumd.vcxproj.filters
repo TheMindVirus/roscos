@@ -96,13 +96,28 @@
     <ClInclude Include="..\roscommon\Vc4Ddi.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\roscompiler\roscompiler.h">
+    <ClInclude Include="roscompiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RosUmdDepthStencilView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RosUmdShaderResourceView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="precomp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosLogging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosAllocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosGpuCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -137,5 +152,16 @@
     <ClCompile Include="RosUmdLogging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="precomp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="roscompiler.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="Ros.inf">
+      <Filter>Driver Files</Filter>
+    </Inf>
   </ItemGroup>
 </Project>

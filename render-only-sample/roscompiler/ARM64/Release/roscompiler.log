@@ -7,4 +7,4 @@
   Vc4Disasm.cpp
   Vc4Emit.cpp
   Vc4Shader.cpp
-  roscompiler.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\roscompiler.lib
+  roscompiler.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\roscompiler.lib

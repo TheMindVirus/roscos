@@ -1405,30 +1405,30 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     // the pixel shader constant buffer is copied directly into command buffer.
     //
 
-    UINT    psContantDataSize;
-    UINT    vsContantDataSize;
-    UINT    csContantDataSize;
+    //UINT    psContantDataSize;
+    //UINT    vsContantDataSize;
+    //UINT    csContantDataSize;
 
-    VC4_UNIFORM_FORMAT *    pPSUniformEntries;
-    VC4_UNIFORM_FORMAT *    pVSUniformEntries;
-    VC4_UNIFORM_FORMAT *    pCSUniformEntries;
-    UINT    numPSUniformEntries;
-    UINT    numVSUniformEntries;
-    UINT    numCSUniformEntries;
+    //VC4_UNIFORM_FORMAT *    pPSUniformEntries;
+    //VC4_UNIFORM_FORMAT *    pVSUniformEntries;
+    //VC4_UNIFORM_FORMAT *    pCSUniformEntries;
+    //UINT    numPSUniformEntries;
+   // UINT    numVSUniformEntries;
+    //UINT    numCSUniformEntries;
 
     //
     // Shader compiler specifies how multiple constant buffers are copied/merged into command buffer
     //
 
-    pPSUniformEntries = m_pixelShader->GetShaderUniformFormat(ROS_PIXEL_SHADER_UNIFORM_STORAGE, &numPSUniformEntries);
-    pVSUniformEntries = m_vertexShader->GetShaderUniformFormat(ROS_VERTEX_SHADER_UNIFORM_STORAGE, &numVSUniformEntries);
-    pCSUniformEntries = m_vertexShader->GetShaderUniformFormat(ROS_COORDINATE_SHADER_UNIFORM_STORAGE, &numCSUniformEntries);
+    //pPSUniformEntries = m_pixelShader->GetShaderUniformFormat(ROS_PIXEL_SHADER_UNIFORM_STORAGE, &numPSUniformEntries);
+    //pVSUniformEntries = m_vertexShader->GetShaderUniformFormat(ROS_VERTEX_SHADER_UNIFORM_STORAGE, &numVSUniformEntries);
+    //pCSUniformEntries = m_vertexShader->GetShaderUniformFormat(ROS_COORDINATE_SHADER_UNIFORM_STORAGE, &numCSUniformEntries);
 
-    psContantDataSize = numPSUniformEntries*sizeof(FLOAT);
-    vsContantDataSize = numVSUniformEntries*sizeof(FLOAT);
-    csContantDataSize = numCSUniformEntries*sizeof(FLOAT);
+    //psContantDataSize = numPSUniformEntries*sizeof(FLOAT);
+    //vsContantDataSize = numVSUniformEntries*sizeof(FLOAT);
+    //csContantDataSize = numCSUniformEntries*sizeof(FLOAT);
 
-    maxStateComamnds += (psContantDataSize + vsContantDataSize + csContantDataSize);
+    //maxStateComamnds += (psContantDataSize + vsContantDataSize + csContantDataSize);
 
     m_commandBuffer.ReserveCommandBufferSpace(
         false,                                  // HW command
@@ -1860,7 +1860,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     vc4GLShaderStateRecordOffset = AlignValue(vc4GLShaderStateRecordOffset, 16);
 
     *pVC4Branch = vc4Branch;
-
+    /*
     m_commandBuffer.SetPatchLocation(
         pCurPatchLocation,
         dummyAllocIndex,
@@ -1872,7 +1872,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             psContantDataSize +
             vsContantDataSize +
             csContantDataSize);
-
+*/
     //
     // Write Shader State Record for the subsequent NV Shader State command
     //
@@ -1907,11 +1907,11 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     //
     // Set Fragment Shader Uniforms Address
     //
-
+    /*
     UINT    psUniformOffset = vc4GLShaderStateRecordOffset +
                               sizeof(VC4GLShaderStateRecord) +
-                              m_elementLayout->m_numElements*sizeof(VC4VertexAttribute);
-
+                              m_elementLayout->m_numElements*sizeof(VC4VertexAttribute);*/
+    /*
     if (psContantDataSize)
     {
         m_commandBuffer.SetPatchLocation(
@@ -1933,7 +1933,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             dummyAllocIndex,
             vc4GLShaderStateRecordOffset + offsetof(VC4GLShaderStateRecord, FragmentShaderUniformsAddress));
     }
-
+    */
 #if DBG
     pVC4GLShaderStateRecord->VertexShaderCodeAddress        = 0xDEADBEEF;
     pVC4GLShaderStateRecord->VertexShaderUniformsAddress    = 0xDEADBEEF;
@@ -1949,7 +1949,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     //
     // Set Vertex Shader Uniform Address
     //
-
+    /*
     if (vsContantDataSize)
     {
         m_commandBuffer.SetPatchLocation(
@@ -1966,7 +1966,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             dummyAllocIndex,
             vc4GLShaderStateRecordOffset + offsetof(VC4GLShaderStateRecord, VertexShaderUniformsAddress));
     }
-
+    */
 #if DBG
     pVC4GLShaderStateRecord->CoordinateShaderCodeAddress        = 0xDEADBEEF;
     pVC4GLShaderStateRecord->CoordinateShaderUniformsAddress    = 0xDEADBEEF;
@@ -1984,7 +1984,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     //
     // Set Vertex Shader Uniform Address
     //
-
+    /*
     if (csContantDataSize)
     {
         m_commandBuffer.SetPatchLocation(
@@ -2001,7 +2001,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             dummyAllocIndex,
             vc4GLShaderStateRecordOffset + offsetof(VC4GLShaderStateRecord, CoordinateShaderUniformsAddress));
     }
-
+    */
     curCommandOffset = vc4GLShaderStateRecordOffset;
 
     VC4VertexAttribute *    pVC4VertexAttribute;
@@ -2056,7 +2056,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
     //
 
     pCurCommand = (BYTE *)pVC4VertexAttribute;
-
+    /*
     if (psContantDataSize)
     {
         WriteUniforms(
@@ -2078,7 +2078,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             curCommandOffset,
             pCurPatchLocation);
     }
-
+    
     if (csContantDataSize)
     {
         WriteUniforms(
@@ -2089,7 +2089,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
             curCommandOffset,
             pCurPatchLocation);
     }
-
+    */
     //
     // Write GL Shader State command
     //
@@ -2153,7 +2153,7 @@ void RosUmdDevice::RefreshPipelineState(UINT vertexOffset)
 }
 
 #if VC4
-
+/*
 void RosUmdDevice::WriteUniforms(
     BOOLEAN                     bPSUniform,
     VC4_UNIFORM_FORMAT *        pUniformEntries,
@@ -2331,7 +2331,7 @@ void RosUmdDevice::WriteUniforms(
         }
     }
 }
-
+*/
 #endif
 
 void RosUmdDevice::WriteEpilog()

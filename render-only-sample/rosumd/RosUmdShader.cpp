@@ -29,7 +29,7 @@ RosUmdShader::Standup(
 void
 RosUmdShader::Teardown()
 {
-    delete m_pCompiler;
+    //delete m_pCompiler;
     delete[] m_pCode;
 
     m_hwShaderCode.Teardown();
@@ -42,14 +42,14 @@ RosUmdShader::Update()
 }
 
 #if VC4
-
+/*
 VC4_UNIFORM_FORMAT *
 RosUmdShader::GetShaderUniformFormat(
     UINT Type, UINT *pUniformFormatEntries)
 {
     return m_pCompiler->GetShaderUniformFormat(Type, pUniformFormatEntries);
 }
-
+*/
 #endif
 
 void
@@ -81,10 +81,10 @@ void
 RosUmdPipelineShader::Update()
 {
     // TODO: state dirtiness check.
-    if (m_pCompiler)
-    {
-        return;
-    }
+    //if (m_pCompiler)
+    //{
+    //    return;
+    //}
 
     assert(m_pCode != NULL);
 
@@ -103,7 +103,7 @@ RosUmdPipelineShader::Update()
     default:
         assert(false);
     };
-
+    /*
     m_pCompiler = RosCompilerCreate(m_ProgramType,
                                     m_pCode,
                                     ShaderLinkage[0], // Downstream
@@ -119,17 +119,18 @@ RosUmdPipelineShader::Update()
                                     m_pOutputSignatureEntries,
                                     0,
                                     NULL);
+                                    
     if (m_pCompiler == NULL)
     {
         throw RosUmdException(E_OUTOFMEMORY);
     }
-
+    
     HRESULT hr;
     if (FAILED(hr = m_pCompiler->Compile()))
     {
         throw RosUmdException(hr);
     }
-
+    
     {
         m_hwShaderCodeSize = m_pCompiler->GetShaderCodeSize();
         assert(m_hwShaderCodeSize != 0);
@@ -162,7 +163,7 @@ RosUmdPipelineShader::Update()
             }
         }
     }
-
+    */
     throw RosUmdException(E_FAIL);
 }
 

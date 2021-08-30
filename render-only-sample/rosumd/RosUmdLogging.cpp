@@ -4,7 +4,7 @@
 
 #include "precomp.h"
 
-#include <RosLogging.h>
+#include "RosLogging.h"
 
 int _RosLogBugcheck (
     ULONG /*Level*/

@@ -1,0 +1,21 @@
+﻿  Building 'roskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  precomp.cpp
+  RosKmdAcpi.cpp
+  RosKmdAdapter.cpp
+  RosKmdContext.cpp
+  RosKmdDdi.cpp
+  RosKmdDevice.cpp
+  RosKmdGlobal.cpp
+  RosKmdRapAdapter.cpp
+  RosKmdSoftAdapter.cpp
+  RosKmdUtil.cpp
+  RosKmdPower.cpp
+  RosKmdLogging.cpp
+  Vc4Debug.cpp
+  Vc4Display.cpp
+  Generating code
+  Finished generating code
+  roskmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Debug\roskmd.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Debug\roskmd.sys
+  

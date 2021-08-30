@@ -78,16 +78,7 @@
     <ClInclude Include="RosKmdUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\roscommon\Vc4Ddi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\roscommon\Vc4Hw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RosKmdDdi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\roscommon\Vc4Mailbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RosKmdRapAdapter.h">
@@ -97,18 +88,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RosKmdLogging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vc4Debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vc4Display.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vc4Hvs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vc4PixelValve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

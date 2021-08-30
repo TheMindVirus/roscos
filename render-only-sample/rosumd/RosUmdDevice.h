@@ -295,7 +295,7 @@ private:
 
     void WriteUniforms(
         BOOLEAN                     bPSUniform,
-        VC4_UNIFORM_FORMAT *        pUniformEntries,
+        //VC4_UNIFORM_FORMAT *        pUniformEntries,
         UINT                        numUniformEntries,
         BYTE *                     &pCurCommand,
         UINT                       &curCommandOffset,

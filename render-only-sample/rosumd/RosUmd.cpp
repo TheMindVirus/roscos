@@ -29,7 +29,7 @@ BOOL WINAPI DllMain(
             
             ROS_LOG_TRACE("RosUmd was loaded. (hmod = 0x%p)", hmod);
             
-            InitializeShaderCompilerLibrary();
+            //InitializeShaderCompilerLibrary();
             g_hDLL = hmod;
         } break;
 

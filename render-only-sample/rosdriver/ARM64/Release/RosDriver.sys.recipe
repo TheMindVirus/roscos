@@ -2,13 +2,13 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\rosumd.dll</FullPath>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\rosumd.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\roskmd.sys</FullPath>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\roskmd.sys</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\ROSCOS\render-only-sample\ARM64\Release\RosDriver.sys</FullPath>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\RosDriver.sys</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

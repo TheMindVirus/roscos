@@ -243,6 +243,8 @@ HRESULT APIENTRY RosUmdAdapter::GetCaps(
 //----------------------------------------------------------------------------------------------------------------------------------
 HRESULT APIENTRY OpenAdapter10_2( D3D10DDIARG_OPENADAPTER* pArgs )
 {
+    debug("[CALL]: HRESULT APIENTRY OpenAdapter10_2");
+    /*
     RosUmdAdapter* pAdapter = new RosUmdAdapter;
     if( NULL == pAdapter )
     {
@@ -260,6 +262,7 @@ HRESULT APIENTRY OpenAdapter10_2( D3D10DDIARG_OPENADAPTER* pArgs )
         delete pAdapter;
         return e.m_hr;
     }
-
+    */
     return S_OK;
+    UNREFERENCED_PARAMETER(pArgs);
 }

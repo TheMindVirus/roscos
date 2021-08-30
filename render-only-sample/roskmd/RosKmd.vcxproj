@@ -55,9 +55,6 @@
   <ItemGroup>
     <ClInclude Include="..\roscommon\RosAllocation.h" />
     <ClInclude Include="..\roscommon\RosGpuCommand.h" />
-    <ClInclude Include="..\roscommon\Vc4Ddi.h" />
-    <ClInclude Include="..\roscommon\Vc4Hw.h" />
-    <ClInclude Include="..\roscommon\Vc4Mailbox.h" />
     <ClInclude Include="RosKmd.h" />
     <ClInclude Include="RosKmdAcpi.h" />
     <ClInclude Include="RosKmdAdapter.h" />
@@ -71,10 +68,6 @@
     <ClInclude Include="RosKmdSoftAdapter.h" />
     <ClInclude Include="RosKmdUtil.h" />
     <ClInclude Include="RosKmdLogging.h" />
-    <ClInclude Include="Vc4Debug.h" />
-    <ClInclude Include="Vc4Display.h" />
-    <ClInclude Include="Vc4Hvs.h" />
-    <ClInclude Include="Vc4PixelValve.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{65CF1498-21A7-4356-8C3A-3642958DEF34}</ProjectGuid>

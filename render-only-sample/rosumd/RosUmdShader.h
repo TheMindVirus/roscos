@@ -9,11 +9,15 @@ friend RosUmdDevice;
 
 public:
 
-    RosUmdShader(RosUmdDevice * pDevice, D3D10_SB_TOKENIZED_PROGRAM_TYPE Type)
+    RosUmdShader(RosUmdDevice* pDevice, D3D10_SB_TOKENIZED_PROGRAM_TYPE Type)
         : m_pDevice(pDevice),
-          m_ProgramType(Type),
-          m_pCompiler(NULL)
+        m_ProgramType(Type),
+        m_hRTShader(D3D10DDI_HRTSHADER()),
+        m_hwShaderCodeSize(0),
+        m_pCode(0),
+        m_vc4CoordinateShaderOffset(0)
     {
+
     }
 
     virtual ~RosUmdShader()
@@ -39,17 +43,17 @@ public:
 
     UINT GetShaderInputCount()
     {
-        return m_pCompiler->GetShaderInputCount();
+        return 0; // m_pCompiler->GetShaderInputCount();
     }
 
     UINT GetShaderOutputCount()
     {
-        return m_pCompiler->GetShaderOutputCount();
+        return 0; // m_pCompiler->GetShaderOutputCount();
     }
 
 #if VC4
 
-    VC4_UNIFORM_FORMAT * GetShaderUniformFormat(UINT Type, UINT *pUniformFormatEntries);
+    //VC4_UNIFORM_FORMAT * GetShaderUniformFormat(UINT Type, UINT *pUniformFormatEntries);
     
 #endif
 
@@ -65,7 +69,7 @@ protected:
     UINT                            m_hwShaderCodeSize;
     UINT                            m_vc4CoordinateShaderOffset;
 
-    RosCompiler *                   m_pCompiler;
+    //RosCompiler *                   m_pCompiler;
 };
 
 inline RosUmdShader* RosUmdShader::CastFrom(D3D10DDI_HSHADER hShader)
@@ -122,7 +126,7 @@ class RosUmdTesselationShader : public RosUmdShader
 public:
 
     RosUmdTesselationShader(RosUmdDevice *pDevice, D3D10_SB_TOKENIZED_PROGRAM_TYPE Type)
-        : RosUmdShader(pDevice, Type)
+        : RosUmdShader(pDevice, Type) , m_pOutputSignatureEntries(NULL) , m_pPatchConstantSignatureEntries(NULL)
     {
     }
 
