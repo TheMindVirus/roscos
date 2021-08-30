@@ -1,0 +1,7 @@
+﻿  main.cxx
+C:\Users\Alastair\Documents\Visual Studio 2019\Projects\DirectX-AdapterSelection\main.cxx(22,48): warning C4244: 'argument': conversion from 'SIZE_T' to 'UINT', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 118 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  DirectX-AdapterSelection.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\DirectX-AdapterSelection\x64\Release\DirectX-AdapterSelection.exe
