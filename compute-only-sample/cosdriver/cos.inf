@@ -34,8 +34,8 @@ ComputeOnlySample.UserMode = 11 ; system32
 [Manufacturer]
 %ManufacturerName%=ComputeOnlySample.Mfg,NT$ARCH$
 
-[ControlFlags]
-ExcludeFromSelect=*
+;[ControlFlags]
+;ExcludeFromSelect=*
 
 [ComputeOnlySample.Mfg.NT$ARCH$]
 %ComputeOnlySample% = ComputeOnlySample,ACPI\COMPUTEONLYSAMPLE

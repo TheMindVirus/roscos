@@ -1,8 +1,9 @@
 ﻿  Building 'RosDriver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping ARM64\Release\Ros.inf
-  Stamping [Version] section with DriverVer=08/30/2021,3.15.6.127
+  Stamping [Version] section with DriverVer=08/30/2021,5.36.36.405
   Building 'rosumd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
-  .........................
+  Building 'roskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  ..........................
   Signability test complete.
   
   Errors:

@@ -1,10 +1,10 @@
 ﻿  Building 'cosDriver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping ARM64\Release\cos.inf
-  Stamping [Version] section with DriverVer=08/30/2021,4.59.4.212
+  Stamping [Version] section with DriverVer=08/30/2021,5.37.34.865
           1 file(s) copied.
-  Building 'cosumd12' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
   Building 'coskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
-  .........................
+  Building 'cosumd12' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
+  ..........................
   Signability test complete.
   
   Errors:

@@ -19,7 +19,7 @@ ClassGuid={4D36E968-E325-11CE-BFC1-08002BE10318}
 Provider=%ManufacturerName%
 CatalogFile=coskmd.cat
 PnpLockdown=1
-DriverVer = 08/30/2021,4.59.4.212
+DriverVer = 08/30/2021,5.37.34.865
 
 [SourceDisksNames]
 0=%ComputeOnlySampleDisk%
@@ -35,8 +35,8 @@ ComputeOnlySample.UserMode = 11 ; system32
 [Manufacturer]
 %ManufacturerName%=ComputeOnlySample.Mfg,NTARM64
 
-[ControlFlags]
-ExcludeFromSelect=*
+;[ControlFlags]
+;ExcludeFromSelect=*
 
 [ComputeOnlySample.Mfg.NTARM64]
 %ComputeOnlySample% = ComputeOnlySample,ACPI\COMPUTEONLYSAMPLE

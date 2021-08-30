@@ -19,7 +19,7 @@ ClassGuid={4D36E968-E325-11CE-BFC1-08002BE10318}
 Provider=%ManufacturerName%
 CatalogFile=roskmd.cat
 PnpLockdown=1
-DriverVer = 08/30/2021,3.15.6.127
+DriverVer = 08/30/2021,5.36.36.405
 
 [SourceDisksNames]
 0=%RenderOnlySampleDisk%
@@ -35,8 +35,8 @@ RenderOnlySample.UserMode = 11 ; system32
 [Manufacturer]
 %ManufacturerName%=RenderOnlySample.Mfg,NTARM64
 
-[ControlFlags]
-ExcludeFromSelect=*
+;[ControlFlags]
+;ExcludeFromSelect=*
 
 [RenderOnlySample.Mfg.NTARM64]
 %RenderOnlySample% = RenderOnlySample,ACPI\RENDERONLYSAMPLE

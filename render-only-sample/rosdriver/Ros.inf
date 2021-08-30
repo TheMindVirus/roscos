@@ -34,8 +34,8 @@ RenderOnlySample.UserMode = 11 ; system32
 [Manufacturer]
 %ManufacturerName%=RenderOnlySample.Mfg,NT$ARCH$
 
-[ControlFlags]
-ExcludeFromSelect=*
+;[ControlFlags]
+;ExcludeFromSelect=*
 
 [RenderOnlySample.Mfg.NT$ARCH$]
 %RenderOnlySample% = RenderOnlySample,ACPI\RENDERONLYSAMPLE
