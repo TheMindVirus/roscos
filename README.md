@@ -32,4 +32,12 @@ Windows Registry Editor Version 5.00
 ```
 
 ## Quick Links
-https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/render-only-sample/rosumd/RosUmdAdapter.cpp#L244
+OpenAdapter10_2: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/render-only-sample/rosumd/RosUmdAdapter.cpp#L244
+
+new RosUmdDevice: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/render-only-sample/rosumd/RosUmdAdapter.cpp#L85
+m_pWDDM1_3DeviceFuncs: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/render-only-sample/rosumd/RosUmdDevice.cpp#L98
+s_deviceFuncsWDDM1_3: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/render-only-sample/rosumd/RosUmdDeviceDdi.cpp#L26
+
+new CosUmdDevice: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/compute-only-sample/cosumd12/CosUmd12Adapter.cpp#L64
+CosUmd12Device::Standup: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/compute-only-sample/cosumd12/CosUmd12Device.cpp#L38
+m_pUMCallbacks: https://github.com/TheMindVirus/roscos/blob/805f8cfaaf866edf38cf19b2498fd5f1a8d49ff3/compute-only-sample/cosumd12/CosUmd12Device.h#L75
