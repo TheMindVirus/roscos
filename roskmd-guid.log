@@ -6,7 +6,7 @@ RosKmdDdi::DdiAddAdapter MiniportDeviceContext=FFFF9201AAA472B8
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
 
 Received QueryInterface for unsupported interface. (InterfaceType=2564AA4F-DDDB-4495-B4976AD4A84163D7)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DEVINTERFACE_I2C
 
 Received QueryInterface for unsupported interface. (InterfaceType=693A2CB1-8C8D-4AB6-95554B85EF2C7C6B)
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
