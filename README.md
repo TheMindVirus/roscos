@@ -1,7 +1,7 @@
 # roscos
 Visual Studio 2019 Compiled Source Directories of Windows Render/Compute-Only-Sample Drivers (ROS/COS)
 
-![rosisalive](https://github.com/themindvirus/roscos/blob/main/rosisalive.png)
+![highperformance](https://github.com/themindvirus/roscos/blob/roskmd-dev/highperformance.png)
 
 ## Cautionary Note
 The drivers listed in this repository have been attenuated so that they no longer function but are stable enough to install as legacy drivers through Device Manager.
