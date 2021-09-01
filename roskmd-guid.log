@@ -6,22 +6,22 @@ RosKmdDdi::DdiAddAdapter MiniportDeviceContext=FFFF9201AAA472B8
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
 
 Received QueryInterface for unsupported interface. (InterfaceType=2564AA4F-DDDB-4495-B4976AD4A84163D7)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DEVINTERFACE_I2C
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000           //GUID_DEVINTERFACE_I2C
 
 Received QueryInterface for unsupported interface. (InterfaceType=693A2CB1-8C8D-4AB6-95554B85EF2C7C6B)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000         //GUID_DEVINTERFACE_OPM_3
 
 Received QueryInterface for unsupported interface. (InterfaceType=7F098726-2EBB-4FF3-A27F1046B95DC517)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000         //GUID_DEVINTERFACE_OPM_2
 
 Received QueryInterface for unsupported interface. (InterfaceType=E929EEA4-B9F1-407B-AAB9AB08BB44FBF4)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000     //GUID_DEVINTERFACE_OPM_2_JTP
 
 Received QueryInterface for unsupported interface. (InterfaceType=BF4672DE-6B4E-4BE4-A32568A91EA49C09)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000           //GUID_DEVINTERFACE_OPM
 
 Received QueryInterface for unsupported interface. (InterfaceType=AF03F190-22AF-48CB-94BBB78E76A25107)
-RosKmdDdi::DdiQueryAdapterInfo hAdapter=FFFFA68935920000
+RosKmdDdi::DdiQueryAdapterInfo hAdapter=FFFFA68935920000         //GUID_DEVINTERFACE_MIRACAST_DISPLAY
 
 QueryAdapterInfo was called. (Type=29)
 Unsupported query type. (pQueryAdapterInfo->Type=29, pQueryAdapterInfo=0xFFFF9201AAA47028)
@@ -55,25 +55,25 @@ QueryAdapterInfo was called. (Type=10)
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
 
 Received QueryInterface for unsupported interface. (InterfaceType=14F9DB8B-85E1-4AA5-8DAFFF4A7806D5E9)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DXGK_MIPI_DSI_INTERFACE
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000    //GUID_DXGK_MIPI_DSI_INTERFACE
 
 Received QueryInterface for unsupported interface. (InterfaceType=462BC153-40EB-484A-81689972E3CD5AEF)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DXGKDDI_GPU_PARTITION_INTERFACE
 
 Received QueryInterface for unsupported interface. (InterfaceType=197A4A6E-0391-4322-96EAC2760F881D3A)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000  //GUID_DEVINTERFACE_BRIGHTNESS_3
 
 Received QueryInterface for unsupported interface. (InterfaceType=148A3C98-0ECD-465A-B634B05F195F7739)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000  //GUID_DEVINTERFACE_BRIGHTNESS_2
 
 Received QueryInterface for unsupported interface. (InterfaceType=FDE5BBA4-B3F9-46FB-BDAA0728CE3100B4)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DEVINTERFACE_BRIGHTNESS
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000    //GUID_DEVINTERFACE_BRIGHTNESS
 
 Received QueryInterface for unsupported interface. (InterfaceType=2D09818E-DFEB-4173-B5E9AEFD66B202F3)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000          //GUID_DXGK_DP_INTERFACE
 
 Received QueryInterface for unsupported interface. (InterfaceType=962639F3-E9DC-42AB-94EB06516DECA126)
-RosKmdDdi::DdiBuildPagingBuffer hAdapter=FFFFA68935920000
+RosKmdDdi::DdiBuildPagingBuffer hAdapter=FFFFA68935920000   //GUID_DXGK_DISPLAY_DIAGNOSTICS_INTERFACE
 
 RosKmdDdi::DdiBuildPagingBuffer hAdapter=FFFFA68935920000
 
@@ -85,3 +85,7 @@ Adapter was successfully stopped.
 RosKmdDdi::DdiRemoveAdapter MiniportDeviceContext=FFFFA68935920000
 
 RosKmdGlobal::DdiUnload
+
+//D7172248-F296-4C50-A6F5D25D8073063A - GUID_DXGKDDI_SRIOV_INTERFACE - ???
+//1387F270-121A-4A4A-B25E3B1589976C61 - GUID_DXGKDDI_MITIGABLE_DEVICE_INTERFACE - ???
+//7B73A997-48E8-4CAB-9FABE0774B44F599 - GUID_DXGKDDI_FLEXIOV_DEVICE_INTERFACE - ???
