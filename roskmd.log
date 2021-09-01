@@ -73,3 +73,15 @@ Received QueryInterface for unsupported interface. (InterfaceType=2D09818E-DFEB-
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
 
 Received QueryInterface for unsupported interface. (InterfaceType=962639F3-E9DC-42AB-94EB06516DECA126)
+RosKmdDdi::DdiBuildPagingBuffer hAdapter=FFFFA68935920000
+
+RosKmdDdi::DdiBuildPagingBuffer hAdapter=FFFFA68935920000
+
+RosKmdDestroyContext hContext=FFFFA6893339A7D0
+
+RosKmdDdi::DdiStopAdapter MiniportDeviceContext=FFFFA68935920000
+
+Adapter was successfully stopped.
+RosKmdDdi::DdiRemoveAdapter MiniportDeviceContext=FFFFA68935920000
+
+RosKmdGlobal::DdiUnload
