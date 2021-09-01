@@ -34,10 +34,13 @@ Windows Registry Editor Version 5.00
 ## If You Get Stuck
 You may find yourself in the situation where whenever you uninstall the driver you encounter a BSOD. Don't worry, this is normal during testing.
 First Power Off your Raspberry Pi and plug in the storage media into your Driver Development PC.
+
 Then Install and make use of Dism++, a free utility to manage Drivers on an offline installation of Windows: \
 https://www.majorgeeks.com/files/details/dism.html (be careful not to remove essential drivers, only Display Adaptors -> Barthouse -> roskmd.sys)
+
 Also Install and make use of Unlocker, a free utility to manage immovable files on an offline installation of Windows: \
 https://www.majorgeeks.com/files/details/unlocker.html (use with caution, only use it to force delete X:\Windows\System32\drivers\roskmd.sys)
+
 Then safely eject your storage media and plug it back into the Raspberry Pi and reboot.
 Once Windows loads again, open Device Manager -> View -> Show Hidden Devices (Checked) and look in Display Adaptors.
 If "Render Only Sample Device" appears with an exclamation mark icon, uninstall it and optionally reboot.
