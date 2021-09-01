@@ -1,0 +1,86 @@
+0: kd> g
+[CALL]: RosKmdGlobal::DriverEntry
+[CALL]: RosKmdDdi::DdiAddAdapter
+[CALL]: RosKmAdapter::AddAdapter
+[CALL]: RosKmdSoftAdapter::operator new
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiStartAdapter
+[CALL]: RosKmdSoftAdapter::Start
+[CALL]: RosKmAdapter::Start
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiGetNodeMetadata
+[CALL]: RosKmAdapter::GetNodeMetadata
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiBuildPagingBuffer
+[CALL]: RosKmdDdi::DdiBuildPagingBuffer
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryInterface
+[CALL]: RosKmAdapter::QueryInterface
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiDestroyAllocation
+[CALL]: RosKmAdapter::DestroyAllocation
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiQueryAdapterInfo
+[CALL]: RosKmAdapter::QueryAdapterInfo
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+[CALL]: RosKmdDdi::DdiCreateAllocation
+[CALL]: RosKmAdapter::CreateAllocation
+Break instruction exception - code 80000003 (first chance)
+00007ffc`e599c9d0 d43e0000 brk         #0xF000
+1: kd> !analyze -v
+...
+STACK_TEXT:  
+... : KERNELBASE+0x14c9d0
+... : rosumd!OpenAdapter10_2+0x6700 //<-- This is what needs to be called and happens very late or not at all
+0: kd> g
