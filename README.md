@@ -1,6 +1,7 @@
 # roscos
 Visual Studio 2019 Rebased Source Directories of Windows Render-Only-Sample Driver (ROS)
 
+https://github.com/TheMindVirus/roscos/blob/3f76cd6df9943bfe37826ead81aa43e9384dbbad/rosdriver/RosDriver.vcxproj#L144
 ```
 <!--FIX - FilesToPackage is invalid for DriverType Package
   <ItemGroup>
