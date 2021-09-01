@@ -1,16 +1,19 @@
-﻿  Building 'roskmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+﻿  Building 'RosKmd' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   RosKmdAcpi.cpp
   RosKmdAdapter.cpp
   RosKmdContext.cpp
   RosKmdDdi.cpp
   RosKmdDevice.cpp
   RosKmdGlobal.cpp
+  RosKmdPower.cpp
   RosKmdSoftAdapter.cpp
   RosKmdUtil.cpp
-  RosKmdPower.cpp
   Generating code
   Finished generating code
-  roskmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\roskmd.sys
+  RosKmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosKmd.sys
   Done Adding Additional Store
-  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\roskmd.sys
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosKmd.sys
+  
+  Driver is 'Universal'.
+  Inf2Cat task was skipped as there were no inf files to process
   

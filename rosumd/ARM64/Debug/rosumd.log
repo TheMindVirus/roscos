@@ -1,15 +1,14 @@
-﻿  Building 'rosumd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
-  pixlib.cpp
+﻿  Building 'RosUmd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
   RosUmd.cpp
   RosUmdAdapter.cpp
   RosUmdDeviceDdi.cpp
-  pixlib.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
-     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\rosumd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\rosumd.exp
+     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.exp
   Generating code
   Finished generating code
-  rosumd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\rosumd.dll
+  RosUmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.dll
   Done Adding Additional Store
-  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd3\ARM64\Debug\rosumd.dll
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.dll
   
+  Driver is 'Universal'.
   Inf2Cat task was skipped as there were no inf files to process
   

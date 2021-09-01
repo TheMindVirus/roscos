@@ -5,7 +5,7 @@
 // Copyright (C) Microsoft Corporation
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 #include "RosUmd.h"
 
 RosUmdAdapter::RosUmdAdapter() : m_Interface(), m_Version(), m_hRTAdapter(), m_pMSCallbacks(), m_rosAdapterInfo()
@@ -73,7 +73,7 @@ HRESULT APIENTRY RosUmdAdapter::CreateDevice(
     D3D10DDIARG_CREATEDEVICE* pArgs )
 {
     RosUmdAdapter* pThis = RosUmdAdapter::CastFrom(hAdapter); UNREFERENCED_PARAMETER(pArgs); UNREFERENCED_PARAMETER(pThis);
-    /*
+    / *
     RosUmdDevice * pRosUmdDevice = new (pArgs->hDrvDevice.pDrvPrivate) RosUmdDevice(pThis, pArgs);
 
     try
@@ -86,7 +86,7 @@ HRESULT APIENTRY RosUmdAdapter::CreateDevice(
         pRosUmdDevice->~RosUmdDevice();
         return e.m_hr;
     }
-    */
+    * /
     return S_OK;
 }
 
@@ -231,30 +231,4 @@ HRESULT APIENTRY RosUmdAdapter::GetCaps(
     default: return E_NOTIMPL;
     }
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------
-HRESULT APIENTRY OpenAdapter10_2( D3D10DDIARG_OPENADAPTER* pArgs )
-{
-    debug("[CALL]: HRESULT APIENTRY OpenAdapter10_2");
-    /*
-    RosUmdAdapter* pAdapter = new RosUmdAdapter;
-    if( NULL == pAdapter )
-    {
-        return E_OUTOFMEMORY;
-    }
-
-    try
-    {
-        pAdapter->Open(pArgs);
-    }
-
-    catch (RosUmdException & e)
-    {
-        pAdapter->Close();
-        delete pAdapter;
-        return e.m_hr;
-    }
-    */
-    return S_OK;
-    UNREFERENCED_PARAMETER(pArgs);
-}
+*/
