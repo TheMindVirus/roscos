@@ -55,7 +55,7 @@ QueryAdapterInfo was called. (Type=10)
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
 
 Received QueryInterface for unsupported interface. (InterfaceType=14F9DB8B-85E1-4AA5-8DAFFF4A7806D5E9)
-RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
+RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000 //GUID_DXGK_MIPI_DSI_INTERFACE
 
 Received QueryInterface for unsupported interface. (InterfaceType=462BC153-40EB-484A-81689972E3CD5AEF)
 RosKmdDdi::DdiQueryInterface MiniportDeviceContext=FFFFA68935920000
