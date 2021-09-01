@@ -38,7 +38,7 @@ First Power Off your Raspberry Pi and plug in the storage media into your Driver
 Then Install and make use of Dism++, a free utility to manage Drivers on an offline installation of Windows: \
 https://www.majorgeeks.com/files/details/dism.html (be careful not to remove essential drivers, only Display Adaptors -> Barthouse -> roskmd.sys)
 
-Also Install and make use of Unlocker, a free utility to manage immovable files on an offline installation of Windows: \
+Also Install and make use of Unlocker, a free utility to manage Immovable Files on an offline installation of Windows: \
 https://www.majorgeeks.com/files/details/unlocker.html (use with caution, only use it to force delete X:\Windows\System32\drivers\roskmd.sys)
 
 Then safely eject your storage media and plug it back into the Raspberry Pi and reboot.
