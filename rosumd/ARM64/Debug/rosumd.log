@@ -2,12 +2,11 @@
   RosUmd.cpp
   RosUmdAdapter.cpp
   RosUmdDeviceDdi.cpp
-     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.exp
   Generating code
   Finished generating code
-  RosUmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.dll
+  RosUmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Debug\RosUmd.dll
   Done Adding Additional Store
-  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosUmd.dll
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Debug\RosUmd.dll
   
   Driver is 'Universal'.
   Inf2Cat task was skipped as there were no inf files to process

@@ -1,4 +1,4 @@
-#include "RosKmd.h"
+#include "Ros.h"
 
 NTSTATUS
 RosKmAdapter::SetPowerState(
@@ -17,7 +17,7 @@ RosKmAdapter::SetPowerState(
         return STATUS_SUCCESS;
     }
 
-    return STATUS_SUCCESS; UNREFERENCED_PARAMETER(ActionType); // m_display.SetPowerState(DeviceUid, DevicePowerState, ActionType);
+    return m_display.SetPowerState(DeviceUid, DevicePowerState, ActionType);
 }
 
 NTSTATUS

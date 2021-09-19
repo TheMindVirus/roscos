@@ -1,4 +1,4 @@
-#include "RosKmd.h"
+#include "Ros.h"
 
 DRIVER_OBJECT* RosKmdGlobal::s_pDriverObject;
 bool RosKmdGlobal::s_bDoNotInstall = false;
@@ -7,23 +7,28 @@ void * RosKmdGlobal::s_pVideoMemory = NULL;
 PHYSICAL_ADDRESS RosKmdGlobal::s_videoMemoryPhysicalAddress;
 bool RosKmdGlobal::s_bRenderOnly;
 
+#if USE_SIMPENROSE
+
+extern bool g_bUseSimPenrose;
+
+#endif
+
 void
 RosKmdGlobal::DdiUnload(
     void)
 {
-    debug("%s\n", __FUNCTION__);
+    debug("[CALL]: %s", __FUNCTION__);
 
-    if ((s_pVideoMemory != NULL) && (s_pVideoMemory != (PVOID)0xCDCDCDCDCDCDCDCD))
+    if (s_pVideoMemory != NULL)
     {
         MmFreeContiguousMemory(s_pVideoMemory);
         s_pVideoMemory = NULL;
         s_videoMemorySize = 0;
     }
 
-    if ((s_pDriverObject != NULL) && (s_pDriverObject != (PVOID)0xCDCDCDCDCDCDCDCD))
-    {
-        s_pDriverObject = nullptr;
-    }
+    NT_ASSERT(s_pDriverObject);
+    //WPP_CLEANUP(s_pDriverObject);
+    s_pDriverObject = nullptr;
 }
 
 void
@@ -32,8 +37,12 @@ RosKmdGlobal::DdiControlEtwLogging(
     IN_ULONG    Flags,
     IN_UCHAR    Level)
 {
-    debug("%s Enable=%d Flags=%lx Level=%lx\n",
-        __FUNCTION__, Enable, (ULONG)Flags, (ULONG)Level);
+    debug("[CALL]: %s", __FUNCTION__); UNREFERENCED_PARAMETER(Enable); UNREFERENCED_PARAMETER(Flags); UNREFERENCED_PARAMETER(Level);
+
+    //
+    // Enable/Disable ETW logging
+    //
+
 }
 
 extern "C" __control_entrypoint(DeviceDriver)
@@ -46,9 +55,24 @@ NTSTATUS RosKmdGlobal::DriverEntry(__in IN DRIVER_OBJECT* pDriverObject, __in IN
 {
     NTSTATUS    Status;
     DRIVER_INITIALIZATION_DATA DriverInitializationData;
-
+    debug("[CALL]: %s", __FUNCTION__);
     NT_ASSERT(!RosKmdGlobal::s_pDriverObject);
     RosKmdGlobal::s_pDriverObject = pDriverObject;
+
+    //
+    // Initialize logging
+    //
+    {
+        //WPP_INIT_TRACING(pDriverObject, pRegistryPath);
+        //RECORDER_CONFIGURE_PARAMS recorderConfigureParams;
+        //RECORDER_CONFIGURE_PARAMS_INIT(&recorderConfigureParams);
+        //WppRecorderConfigure(&recorderConfigureParams);
+        //WPP_RECORDER_LEVEL_FILTER(ROS_TRACING_VIDPN) = FALSE;
+        //WPP_RECORDER_LEVEL_FILTER(ROS_TRACING_PRESENT) = FALSE;
+#if DBG
+        //WPP_RECORDER_LEVEL_FILTER(ROS_TRACING_DEFAULT) = TRUE;
+#endif // DBG
+    }
 
     debug(
         "Initializing roskmd. (pDriverObject=0x%p, pRegistryPath=%wZ)",
@@ -101,7 +125,90 @@ NTSTATUS RosKmdGlobal::DriverEntry(__in IN DRIVER_OBJECT* pDriverObject, __in IN
     }
 
     s_videoMemoryPhysicalAddress = MmGetPhysicalAddress(s_pVideoMemory);
-    s_bRenderOnly = true; //CRUCIAL
+
+    //
+    // Query the driver registry key to see whether we're render only
+    //
+    {
+        OBJECT_ATTRIBUTES attributes;
+        InitializeObjectAttributes(
+            &attributes,
+            pRegistryPath,
+            OBJ_KERNEL_HANDLE,
+            nullptr,                // RootDirectory
+            nullptr);               // SecurityDescriptor
+
+        HANDLE keyHandle;
+        Status = ZwOpenKey(&keyHandle, GENERIC_READ, &attributes);
+        if (!NT_SUCCESS(Status))
+        {
+            debug(
+                "Failed to open driver registry key. (Status=0x%08lX, pRegistryPath=%wZ, pDriverObject=0x%p)",
+                Status,
+                pRegistryPath,
+                pDriverObject);
+            return Status;
+        }
+        auto closeRegKey = ROS_FINALLY::Do([&]
+        {
+            PAGED_CODE();
+            NTSTATUS tempStatus = ZwClose(keyHandle);
+            UNREFERENCED_PARAMETER(tempStatus);
+            NT_ASSERT(NT_SUCCESS(tempStatus));
+        });
+
+        DECLARE_CONST_UNICODE_STRING(renderOnlyValueName, L"RenderOnly");
+
+        #pragma warning(disable:4201)   // nameless struct/union
+        union {
+            KEY_VALUE_PARTIAL_INFORMATION PartialInfo;
+            struct {
+                ULONG TitleIndex;
+                ULONG Type;
+                ULONG DataLength;
+                ULONG Data;
+            } DUMMYSTRUCTNAME;
+        } valueInfo;
+        #pragma warning(default:4201) // nameless struct/union
+
+        ULONG resultLength;
+        Status = ZwQueryValueKey(
+                keyHandle,
+                const_cast<UNICODE_STRING*>(&renderOnlyValueName),
+                KeyValuePartialInformation,
+                &valueInfo.PartialInfo,
+                sizeof(valueInfo),
+                &resultLength);
+
+        if (NT_SUCCESS(Status))
+        {
+            if (valueInfo.Type == REG_DWORD)
+            {
+                NT_ASSERT(valueInfo.DataLength == sizeof(valueInfo.Data));
+                if (valueInfo.Data != 0)
+                {
+                    debug("Configuring driver as render-only.");
+                    s_bRenderOnly = true;
+                }
+            }
+            else
+            {
+                debug(
+                    "RenderOnly registry value was found, but is not a REG_DWORD. (valueInfo.Type=%d, valueInfo.DataLength=%d)",
+                    valueInfo.Type,
+                    valueInfo.DataLength);
+            }
+        }
+        else if (Status != STATUS_OBJECT_NAME_NOT_FOUND)
+        {
+            debug(
+                "Unexpected error occurred querying RenderOnly registry key. (Status=0x%08lX)",
+                Status);
+
+            // an unexpected type in the registry could cause us to get here,
+            // so don't stop the show.
+        }
+    } // RenderOnly
 
     //
     // Fill in the DriverInitializationData structure and call DlInitialize()
@@ -195,6 +302,7 @@ NTSTATUS RosKmdGlobal::DriverEntry(__in IN DRIVER_OBJECT* pDriverObject, __in IN
     DriverInitializationData.DxgkDdiCalibrateGpuClock = RosKmdDdi::DdiCalibrateGpuClock;
     DriverInitializationData.DxgkDdiSetStablePowerState = RosKmdDdi::DdiSetStablePowerState;
 
+
     //
     // Register display subsystem DDIS.
     // Refer to adapterdisplay.cxx:ADAPTER_DISPLAY::CreateDisplayCore() for
@@ -224,9 +332,8 @@ NTSTATUS RosKmdGlobal::DriverEntry(__in IN DRIVER_OBJECT* pDriverObject, __in IN
 
     if (!NT_SUCCESS(Status))
     {
-        debug("[WARN]: DxgkInitialize Failed");
         return Status;
     }
-    debug("[INFO]: RosKmd DriverEntry Complete");
+
     return Status;
 }

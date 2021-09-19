@@ -5,7 +5,7 @@
 // Copyright (C) Microsoft Corporation
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+///*
 #include "RosUmd.h"
 
 RosUmdAdapter::RosUmdAdapter() : m_Interface(), m_Version(), m_hRTAdapter(), m_pMSCallbacks(), m_rosAdapterInfo()
@@ -56,7 +56,7 @@ void RosUmdAdapter::Open( D3D10DDIARG_OPENADAPTER* pArgs )
 
     *pArgs->pAdapterFuncs_2 = AdapterFuncs;
 
-    pArgs->hAdapter = CastTo();
+    pArgs->hAdapter = CastTo(); //It's still stupid
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -70,29 +70,32 @@ void RosUmdAdapter::Close()
 //----------------------------------------------------------------------------------------------------------------------------------
 HRESULT APIENTRY RosUmdAdapter::CreateDevice(
     D3D10DDI_HADAPTER hAdapter,
-    D3D10DDIARG_CREATEDEVICE* pArgs )
+    D3D10DDIARG_CREATEDEVICE* pArgs)
 {
+    debug(__FUNCTION__);
     RosUmdAdapter* pThis = RosUmdAdapter::CastFrom(hAdapter); UNREFERENCED_PARAMETER(pArgs); UNREFERENCED_PARAMETER(pThis);
-    / *
-    RosUmdDevice * pRosUmdDevice = new (pArgs->hDrvDevice.pDrvPrivate) RosUmdDevice(pThis, pArgs);
+    /*
+    //RosUmdDevice * pRosUmdDevice = new (pArgs->hDrvDevice.pDrvPrivate) RosUmdDevice(pThis, pArgs);
+    RosUmdDevice* pRosUmdDevice = new RosUmdDevice(pThis, pArgs);
 
     try
     {
         pRosUmdDevice->Standup();
     }
 
-    catch( RosUmdException & e )
+    catch(...) // RosUmdException & e )
     {
         pRosUmdDevice->~RosUmdDevice();
-        return e.m_hr;
+        return E_ABORT; // e.m_hr;
     }
-    * /
+    */
     return S_OK;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------
 HRESULT APIENTRY RosUmdAdapter::CloseAdapter( D3D10DDI_HADAPTER hAdapter )
 {
+    debug(__FUNCTION__);
     RosUmdAdapter* pAdapter = RosUmdAdapter::CastFrom( hAdapter );
     pAdapter->Close();
     delete pAdapter;
@@ -105,6 +108,7 @@ SIZE_T APIENTRY RosUmdAdapter::CalcPrivateDeviceSize(
     D3D10DDI_HADAPTER hAdapter,
     const D3D10DDIARG_CALCPRIVATEDEVICESIZE* pArgs )
 {
+    debug(__FUNCTION__);
     pArgs;
 
     RosUmdAdapter* pThis = RosUmdAdapter::CastFrom( hAdapter );
@@ -125,6 +129,7 @@ HRESULT APIENTRY RosUmdAdapter::GetSupportedVersions(
     __inout UINT32* puEntries,
     __out_ecount_part_opt( *puEntries, *puEntries ) UINT64* pSupportedDDIInterfaceVersions )
 {
+    debug(__FUNCTION__);
     RosUmdAdapter* pAdapter = RosUmdAdapter::CastFrom( hAdapter );
     pAdapter;
 
@@ -152,7 +157,7 @@ HRESULT APIENTRY RosUmdAdapter::GetCaps(
     __in const D3D10_2DDIARG_GETCAPS* pCaps )
 {
     hAdapter;
-
+    debug(__FUNCTION__);
     switch (pCaps->Type)
     {
     case (D3D11DDICAPS_THREADING):
@@ -183,7 +188,7 @@ HRESULT APIENTRY RosUmdAdapter::GetCaps(
                 D3D11DDI_ENCODE_3DPIPELINESUPPORT_CAP( D3D11DDI_3DPIPELINELEVEL_10_0 ) |
 #endif // !VC4
                 D3D11DDI_ENCODE_3DPIPELINESUPPORT_CAP( D3D11_1DDI_3DPIPELINELEVEL_9_3 ) | // 9_x are not interesting for IHVs implementing this DDI.
-                D3D11DDI_ENCODE_3DPIPELINESUPPORT_CAP( D3D11_1DDI_3DPIPELINELEVEL_9_2 ) | // For hardware, these levels go through the D3D9 DDI.
+                D3D11DDI_ENCODE_3DPIPELINESUPPORT_CAP( D3D11_1DDI_3DPIPELINELEVEL_9_2 ) | // For hardware, these levels go through the D3D9 DDI. //TODO: DISABLE THIS.
                 D3D11DDI_ENCODE_3DPIPELINESUPPORT_CAP( D3D11_1DDI_3DPIPELINELEVEL_9_1 )
                 ;
         } return S_OK;
@@ -231,4 +236,4 @@ HRESULT APIENTRY RosUmdAdapter::GetCaps(
     default: return E_NOTIMPL;
     }
 }
-*/
+//*/

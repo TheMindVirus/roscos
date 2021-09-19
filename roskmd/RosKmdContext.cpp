@@ -1,22 +1,22 @@
-#include "RosKmd.h"
+#include "Ros.h"
 
 NTSTATUS
-
+__stdcall
 RosKmContext::DdiRender(
     IN_CONST_HANDLE         hContext,
     INOUT_PDXGKARG_RENDER   pRender)
 {
-    debug("RosKmdRender hAdapter=%p\n", hContext);
+    debug("RosKmdRender hAdapter=%lx\n", hContext);
 
-    RosKmContext* pRosKmContext = RosKmContext::Cast(hContext);
-    RosKmAdapter* pRosKmAdapter = pRosKmContext->m_pDevice->m_pRosKmAdapter; UNREFERENCED_PARAMETER(pRosKmAdapter);
+    RosKmContext  *pRosKmContext = RosKmContext::Cast(hContext);
+    RosKmAdapter  *pRosKmAdapter = pRosKmContext->m_pDevice->m_pRosKmAdapter;
 
     pRender->MultipassOffset;
     pRender->DmaBufferSegmentId;
     pRender->DmaBufferPhysicalAddress;
     pRender->pDmaBufferPrivateData;
     pRender->DmaBufferPrivateDataSize;
-    /*
+
     // Copy command buffer
     NT_ASSERT(pRender->DmaSize >= pRender->CommandLength);
 
@@ -77,7 +77,7 @@ RosKmContext::DdiRender(
     pDmaBufInfo->m_DmaBufferPhysicalAddress.QuadPart = 0;
     pDmaBufInfo->m_DmaBufferSize = pRender->DmaSize;
 
-    //pDmaBufInfo->m_pRenderTarget = NULL;
+    pDmaBufInfo->m_pRenderTarget = NULL;
 
     // Validate DMA buffer
     bool isValidDmaBuffer;
@@ -95,6 +95,12 @@ RosKmContext::DdiRender(
         return STATUS_INVALID_PARAMETER;
     }
 
+    if (pCmdBufHeader->m_commandBufferHeader.m_hasVC4ClearColors)
+    {
+        pDmaBufInfo->m_DmaBufState.m_HasVC4ClearColors = 1;
+        pDmaBufInfo->m_VC4ClearColors = pCmdBufHeader->m_commandBufferHeader.m_vc4ClearColors;
+    }
+
     // Perform pre-patch
     pRosKmAdapter->PatchDmaBuffer(
         pDmaBufInfo,
@@ -105,19 +111,22 @@ RosKmContext::DdiRender(
 
     // Must update pDmaBuffer to reflect what space we used
     pRender->pDmaBuffer = (char *)pRender->pDmaBuffer + pRender->CommandLength;
-    */
+
     return STATUS_SUCCESS;
 }
 
 NTSTATUS
-
+__stdcall
 RosKmContext::DdiCreateContext(
     IN_CONST_HANDLE                 hDevice,
     INOUT_PDXGKARG_CREATECONTEXT    pCreateContext)
 {
-    debug("%s hDevice=%p\n", __FUNCTION__, hDevice);
+    debug("%s hDevice=%lx\n",
+        __FUNCTION__, hDevice);
 
-    RosKmContext* pRosKmContext = (RosKmContext *)ExAllocatePoolWithTag(NonPagedPoolNx, sizeof(RosKmContext), 'ROSD');
+    RosKmContext  *pRosKmContext;
+
+    pRosKmContext = (RosKmContext *)ExAllocatePoolWithTag(NonPagedPoolNx, sizeof(RosKmContext), 'ROSD');
     if (!pRosKmContext)
     {
         return STATUS_NO_MEMORY;
@@ -157,13 +166,14 @@ RosKmContext::DdiCreateContext(
 }
 
 NTSTATUS
-
+__stdcall
 RosKmContext::DdiDestroyContext(
     IN_CONST_HANDLE     hContext)
 {
     RosKmContext  *pRosKmContext = RosKmContext::Cast(hContext);
 
-    debug("RosKmdDestroyContext hContext=%p\n", hContext);
+    debug("RosKmdDestroyContext hContext=%lx\n",
+        hContext);
 
     pRosKmContext->~RosKmContext();
 
@@ -182,12 +192,12 @@ RosKmContext::RenderKm(
     return STATUS_SUCCESS;
 }
 
- //===================================================
+ROS_PAGED_SEGMENT_BEGIN; //===================================================
 
-
+_Use_decl_annotations_
 NTSTATUS RosKmContext::Present (DXGKARG_PRESENT* Args)
 {
-    
+    PAGED_CODE();
     ROS_ASSERT_MAX_IRQL(PASSIVE_LEVEL);
 
     debug(
@@ -204,4 +214,4 @@ NTSTATUS RosKmContext::Present (DXGKARG_PRESENT* Args)
     return STATUS_SUCCESS;
 }
 
- //=====================================================
+ROS_PAGED_SEGMENT_END; //=====================================================

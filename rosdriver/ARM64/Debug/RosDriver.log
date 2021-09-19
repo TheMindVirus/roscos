@@ -1,6 +1,6 @@
 ﻿  Building 'RosDriver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
   Stamping ARM64\Debug\Ros.inf
-  Stamping [Version] section with DriverVer=09/01/2021,8.46.1.87
+  Stamping [Version] section with DriverVer=09/19/2021,13.45.27.662
   .........................
   Signability test complete.
   
@@ -11,7 +11,7 @@
   None
   
   Catalog generation complete.
-  C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosDriver\roskmd.cat
+  C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Debug\RosDriver\roskmd.cat
   Done Adding Additional Store
-  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd4\ARM64\Debug\RosDriver\roskmd.cat
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Debug\RosDriver\roskmd.cat
   

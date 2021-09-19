@@ -1,12 +1,14 @@
-#include "RosKmd.h"
+#include "Ros.h"
 
-void* RosKmdSoftAdapter::operator new(size_t size)
+void * RosKmdSoftAdapter::operator new(size_t size)
 {
+    debug("[CALL]: %s", __FUNCTION__);
     return ExAllocatePoolWithTag(NonPagedPoolNx, size, 'ROSD');
 }
 
 void RosKmdSoftAdapter::operator delete(void * ptr)
 {
+    debug("[CALL]: %s", __FUNCTION__);
     ExFreePool(ptr);
 }
 
@@ -17,6 +19,7 @@ RosKmdSoftAdapter::Start(
     OUT_PULONG              NumberOfVideoPresentSources,
     OUT_PULONG              NumberOfChildren)
 {
+    debug("[CALL]: %s", __FUNCTION__);
     return RosKmAdapter::Start(DxgkStartInfo, DxgkInterface, NumberOfVideoPresentSources, NumberOfChildren);
 }
 
@@ -24,10 +27,11 @@ void
 RosKmdSoftAdapter::ProcessRenderBuffer(
     ROSDMABUFSUBMISSION * pDmaBufSubmission)
 {
+    debug("[CALL]: %s", __FUNCTION__);
     ROSDMABUFINFO * pDmaBufInfo = pDmaBufSubmission->m_pDmaBufInfo;
 
     NT_ASSERT(pDmaBufInfo->m_DmaBufState.m_bSwCommandBuffer);
-    /*
+
     NT_ASSERT(0 == (pDmaBufSubmission->m_EndOffset - pDmaBufSubmission->m_StartOffset) % sizeof(GpuCommand));
 
     GpuCommand * pGpuCommand = (GpuCommand *)(pDmaBufInfo->m_pDmaBuffer + pDmaBufSubmission->m_StartOffset);
@@ -52,7 +56,6 @@ RosKmdSoftAdapter::ProcessRenderBuffer(
             break;
         }
     }
-    */
 }
 
 BOOLEAN RosKmdSoftAdapter::InterruptRoutine(

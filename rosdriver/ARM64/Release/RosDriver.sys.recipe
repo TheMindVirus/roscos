@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosKmd.sys</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosDriver.sys</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

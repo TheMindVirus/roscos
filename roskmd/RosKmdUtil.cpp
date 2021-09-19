@@ -6,8 +6,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "RosKmd.h"
+#include "Ros.h"
 
+_IRQL_requires_max_(PASSIVE_LEVEL)
 D3DDDIFORMAT
 TranslateDxgiFormat(
     DXGI_FORMAT dxgiFormat)
@@ -208,7 +209,7 @@ FILE * __cdecl __acrt_iob_func(unsigned)
 
 #endif // USE_SIMPENROSE
 
- //================================================
+ROS_NONPAGED_SEGMENT_BEGIN; //================================================
 
 void* __cdecl operator new (
     size_t Size,
@@ -261,13 +262,13 @@ void* __cdecl operator new[] ( size_t, void* Ptr ) throw ()
 void __cdecl operator delete[] ( void*, void* ) throw ()
 {} // void operator delete[] ( void*, void* )
 
- //==================================================
- //===================================================
+ROS_NONPAGED_SEGMENT_END; //==================================================
+ROS_PAGED_SEGMENT_BEGIN; //===================================================
 
-
+_Use_decl_annotations_
 DXGI_FORMAT DxgiFormatFromD3dDdiFormat (D3DDDIFORMAT Format)
 {
-    
+    PAGED_CODE();
 
     switch (Format)
     {
@@ -353,7 +354,7 @@ DXGI_FORMAT DxgiFormatFromD3dDdiFormat (D3DDDIFORMAT Format)
     }
 }
 
-
+_Use_decl_annotations_
 NTSTATUS RosOpenDevice (
     UNICODE_STRING* FileNamePtr,
     ACCESS_MASK DesiredAccess,
@@ -362,7 +363,7 @@ NTSTATUS RosOpenDevice (
     ROS_ALLOC_TAG AllocTag
     )
 {
-    
+    PAGED_CODE();
     ROS_ASSERT_MAX_IRQL(PASSIVE_LEVEL);
 
     HANDLE fileHandle;
@@ -389,7 +390,7 @@ NTSTATUS RosOpenDevice (
             0);                         // EaLength
     if (!NT_SUCCESS(status)) {
         debug(
-            "ZwCreateFile failed. (status=%0x%08lX, FileNamePtr=%wZ, DesiredAccess=0x%x, ShareAccess=0x%x)",
+            "ZwCreateFile failed. (status=0x%08lX, FileNamePtr=%wZ, DesiredAccess=0x%x, ShareAccess=0x%x)",
             status,
             FileNamePtr,
             DesiredAccess,
@@ -397,7 +398,7 @@ NTSTATUS RosOpenDevice (
         return status;
     } // if
     auto closeHandle = ROS_FINALLY::Do([&] {
-        
+        PAGED_CODE();
         NTSTATUS closeStatus = ZwClose(fileHandle);
         UNREFERENCED_PARAMETER(closeStatus);
         NT_ASSERT(NT_SUCCESS(closeStatus));
@@ -413,7 +414,7 @@ NTSTATUS RosOpenDevice (
             nullptr);   // HandleInformation
     if (!NT_SUCCESS(status)) {
         debug(
-            "ObReferenceObjectByHandleWithTag(...) failed. (status=%0x%08lX, fileHandle=%p)",
+            "ObReferenceObjectByHandleWithTag(...) failed. (status=0x%08lX, fileHandle=%p)",
             status,
             fileHandle);
         return status;
@@ -424,7 +425,7 @@ NTSTATUS RosOpenDevice (
     return status;
 }
 
-
+_Use_decl_annotations_
 NTSTATUS RosSendWriteSynchronously (
     FILE_OBJECT* FileObjectPtr,
     void* InputBufferPtr,
@@ -432,7 +433,7 @@ NTSTATUS RosSendWriteSynchronously (
     ULONG_PTR* InformationPtr
     )
 {
-    
+    PAGED_CODE();
     ROS_ASSERT_MAX_IRQL(PASSIVE_LEVEL);
 
     KEVENT event;
@@ -478,7 +479,7 @@ NTSTATUS RosSendWriteSynchronously (
     return status;
 }
 
-
+_Use_decl_annotations_
 NTSTATUS RosSendIoctlSynchronously (
     FILE_OBJECT* FileObjectPtr,
     ULONG IoControlCode,
@@ -490,7 +491,7 @@ NTSTATUS RosSendIoctlSynchronously (
     ULONG_PTR* InformationPtr
     )
 {
-    
+    PAGED_CODE();
     ROS_ASSERT_MAX_IRQL(PASSIVE_LEVEL);
 
     KEVENT event;
@@ -537,5 +538,5 @@ NTSTATUS RosSendIoctlSynchronously (
     return status;
 }
 
- //=====================================================
+ROS_PAGED_SEGMENT_END; //=====================================================
 

@@ -1,0 +1,12 @@
+﻿  Building 'RosUmd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
+  RosUmd.cpp
+     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.exp
+  Generating code
+  Finished generating code
+  RosUmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.dll
+  Done Adding Additional Store
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.dll
+  
+  Driver is 'Universal'.
+  Inf2Cat task was skipped as there were no inf files to process
+  
