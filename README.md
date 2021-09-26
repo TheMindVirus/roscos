@@ -1,6 +1,15 @@
 # roscos
 Visual Studio 2019 Compiled Source Directories of Windows Render/Compute-Only-Sample Drivers (ROS/COS)
 
+## rosumd6-dev Branch Notes
+ * Stubs have been added for the RosUmdDevice C++ Class which handles draw calls. These are yet to be filled in.
+ * The Driver has been tested to compile, load, receive draw calls and unload cleanly.
+   - This is as of 2021 with VS2019, compilation experiences may differ.
+ * A known side-effect of installing this driver on a Raspberry Pi 4 running WoR is that the Start Menu will \
+   fail to appear. This is normal, because this Render Driver is now receiving some of the draw calls for it.
+ * A lot more further development especially by Microsoft and Raspberry Pi Engineers as well as Engineers \
+   and Professional Developers from the Community. I hope this is of some help to you all.
+
 ![highperformance](https://github.com/themindvirus/roscos/blob/roskmd-dev/highperformance.png)
 
 ## Cautionary Note
