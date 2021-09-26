@@ -3,6 +3,11 @@ Visual Studio 2019 Compiled Source Directories of Windows Render/Compute-Only-Sa
 
 ## rosumd6-dev Branch Notes
  * Stubs have been added for the RosUmdDevice C++ Class which handles draw calls. These are yet to be filled in.
+ * The Standard C/C++ `new` and `delete` keywords have been scrapped, in turn destroying a lot of source code. \
+   - In KMDF these have been replaced by `ExAllocatePoolWithTag()` and `ExFreePool()`.
+   - In UMDFv2 these have been replaced by `malloc()` and `free()`.
+   - The `memset()` method is unresolved, so all occurrences have been replaced by for loops.
+   - Several other intrinsics are unresolved in `msvcrt.lib`, so stubs have been created for them where possible.
  * The Driver has been tested to compile, load, receive draw calls and unload cleanly.
    - This is as of 2021 with VS2019, compilation experiences may differ.
  * A known side-effect of installing this driver on a Raspberry Pi 4 running WoR is that the Start Menu will \
