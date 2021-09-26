@@ -1,6 +1,8 @@
-#include "RosKmd.h"
+#include "Ros.h"
 
-NTSTATUS APIENTRY RosKmDevice::DdiCreateDevice(
+#pragma warning(disable : 4291) //matching new and delete not detected by intellisense
+
+NTSTATUS __stdcall RosKmDevice::DdiCreateDevice(
     IN_CONST_HANDLE hAdapter,
     INOUT_PDXGKARG_CREATEDEVICE pCreateDevice)
 {
@@ -15,12 +17,12 @@ NTSTATUS APIENTRY RosKmDevice::DdiCreateDevice(
     return STATUS_SUCCESS;
 }
 
-NTSTATUS  RosKmDevice::DdiDestroyDevice(
+NTSTATUS __stdcall RosKmDevice::DdiDestroyDevice(
     IN_CONST_HANDLE     hDevice)
 {
     RosKmDevice   *pRosKmDevice = (RosKmDevice *)hDevice;
-    UNREFERENCED_PARAMETER(pRosKmDevice);
-    //delete pRosKmDevice;
+
+    delete pRosKmDevice;
 
     return STATUS_SUCCESS;
 }
@@ -39,11 +41,14 @@ RosKmDevice::~RosKmDevice()
     // do nothing
 }
 
-NTSTATUS APIENTRY RosKmDevice::DdiCloseAllocation(
+NTSTATUS
+__stdcall
+RosKmDevice::DdiCloseAllocation(
     IN_CONST_HANDLE                     hDevice,
     IN_CONST_PDXGKARG_CLOSEALLOCATION   pCloseAllocation)
 {
-    debug("%s hDevice=%p\n", __FUNCTION__, hDevice);
+    debug("%s hDevice=%p\n",
+        __FUNCTION__, hDevice);
 
     RosKmDevice   *pRosKmDevice = (RosKmDevice *)hDevice;
     pRosKmDevice;
@@ -57,12 +62,12 @@ NTSTATUS APIENTRY RosKmDevice::DdiCloseAllocation(
     return STATUS_SUCCESS;
 }
 
- //===================================================
+ROS_PAGED_SEGMENT_BEGIN; //===================================================
 
-
+_Use_decl_annotations_
 NTSTATUS RosKmDevice::OpenAllocation (const DXGKARG_OPENALLOCATION* ArgsPtr)
 {
-    
+    PAGED_CODE();
     ROS_ASSERT_MAX_IRQL(PASSIVE_LEVEL);
 
     const DXGKRNL_INTERFACE& dxgkInterface = *m_pRosKmAdapter->GetDxgkInterface();
@@ -89,7 +94,7 @@ NTSTATUS RosKmDevice::OpenAllocation (const DXGKARG_OPENALLOCATION* ArgsPtr)
             if (!rosKmdDeviceAllocationPtr)
             {
                 debug(
-                    "Failed to allocate memory for RosKmdDeviceAllocation structure. (sizeof(RosKmdDeviceAllocation)=%lu)",
+                    "Failed to allocate memory for RosKmdDeviceAllocation structure. (sizeof(RosKmdDeviceAllocation)=0x%016llX)",
                     sizeof(RosKmdDeviceAllocation));
                 return STATUS_NO_MEMORY;
             }
@@ -110,4 +115,4 @@ NTSTATUS RosKmDevice::OpenAllocation (const DXGKARG_OPENALLOCATION* ArgsPtr)
     return STATUS_SUCCESS;
 }
 
- //=====================================================
+ROS_PAGED_SEGMENT_END; //=====================================================

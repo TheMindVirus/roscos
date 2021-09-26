@@ -19,7 +19,7 @@ ClassGuid={4D36E968-E325-11CE-BFC1-08002BE10318}
 Provider=%ManufacturerName%
 CatalogFile=roskmd.cat
 PnpLockdown=1
-DriverVer = 09/01/2021,1.41.51.842
+DriverVer = 09/26/2021,13.55.49.115
 
 [SourceDisksNames]
 0=%RenderOnlySampleDisk%
@@ -55,6 +55,7 @@ rosumd.dll,,,0x4000
 
 [RenderOnlySample_AddReg]
 HKR,,UserModeDriverName,%REG_MULTI_SZ%,rosumd.dll,rosumd.dll,rosumd.dll,rosumd.dll
+HKR,,InstalledDisplayDrivers,%REG_MULTI_SZ%,rosumd,rosumd,rosumd,rosumd
 HKLM,"SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler",EnablePreemption,%REG_DWORD%,0
 HKLM,"SYSTEM\CurrentControlSet\Control\GraphicsDrivers",TdrDebugMode,%REG_DWORD%,1
 HKLM,"SYSTEM\CurrentControlSet\Control\GraphicsDrivers\MemoryManager",DirectFlipMemoryRequirement,%REG_DWORD%,0

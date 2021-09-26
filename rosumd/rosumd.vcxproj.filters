@@ -15,39 +15,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RosUmdAdapter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pixel.hpp">
+    <ClInclude Include="RosUmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RosUmdDeviceDdi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RosUmdRasterizerState.h">
+    <ClInclude Include="RosUmdAdapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RosUmdDepthStencilState.h">
+    <ClInclude Include="RosUmdDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RosUmdSampler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RosUmdElementLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RosUmdBlendState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RosUmdRenderTargetView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RosUmdDepthStencilView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RosUmd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RosUmd.def">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RosUmd.cpp">
@@ -56,16 +40,11 @@
     <ClCompile Include="RosUmdAdapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pixlib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RosUmdDeviceDdi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="RosUmd.def">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClCompile Include="RosUmdDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

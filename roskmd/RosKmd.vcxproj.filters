@@ -25,12 +25,93 @@
     <ClCompile Include="RosKmdUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RosKmdRapAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="RosKmdSoftAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RosKmdLogging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vc4Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vc4Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RosAllocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosGpuCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="RosKmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdAcpi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdAllocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdGlobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Ddi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Hw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdDdi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Mailbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdRapAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdSoftAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosKmdLogging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4Hvs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vc4PixelValve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RosLogging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

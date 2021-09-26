@@ -483,7 +483,7 @@ SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcRasterizerStateSize(
     D3D10DDI_HDEVICE,
     const D3D11_1_DDI_RASTERIZER_DESC*)
 {
-    return sizeof(RosUmdRasterizerState);
+    return 0; // sizeof(RosUmdRasterizerState);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiCreateRasterizerState(
@@ -492,8 +492,11 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateRasterizerState(
     D3D10DDI_HRASTERIZERSTATE hRasterizerState,
     D3D10DDI_HRTRASTERIZERSTATE hRTRasterizerState)
 {
-    RosUmdRasterizerState* pRasterizerState = new (hRasterizerState.pDrvPrivate) RosUmdRasterizerState(desc, hRTRasterizerState);
-    pRasterizerState; // unused
+    //RosUmdRasterizerState* pRasterizerState = new (hRasterizerState.pDrvPrivate) RosUmdRasterizerState(desc, hRTRasterizerState);
+    //pRasterizerState; // unused
+    UNREFERENCED_PARAMETER(desc);
+    UNREFERENCED_PARAMETER(hRasterizerState);
+    UNREFERENCED_PARAMETER(hRTRasterizerState);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroyRasterizerState(
@@ -514,10 +517,10 @@ void APIENTRY RosUmdDeviceDdi::DdiSetRasterizerState(
     D3D10DDI_HRASTERIZERSTATE hRasterizerState)
 {
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdRasterizerState * pRasterizerState = RosUmdRasterizerState::CastFrom(hRasterizerState);
+    //RosUmdRasterizerState * pRasterizerState = RosUmdRasterizerState::CastFrom(hRasterizerState);
     //pDevice->SetRasterizerState(pRasterizerState);
-    UNREFERENCED_PARAMETER(pRasterizerState);
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hRasterizerState);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiSetScissorRects(
@@ -547,7 +550,8 @@ SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcPrivateDepthStencilStateSize(
     //pDevice; // unused
     desc; // unused
 
-    return sizeof(RosUmdDepthStencilState); UNREFERENCED_PARAMETER(hDevice);
+    return 0; // sizeof(RosUmdDepthStencilState);
+    UNREFERENCED_PARAMETER(hDevice);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiCreateDepthStencilState(
@@ -559,9 +563,12 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateDepthStencilState(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unused
 
-    RosUmdDepthStencilState* pDepthStencilState = new (hDepthStencilState.pDrvPrivate) RosUmdDepthStencilState(desc, hRTDepthStencilState);
-    pDepthStencilState; // unused
+    //RosUmdDepthStencilState* pDepthStencilState = new (hDepthStencilState.pDrvPrivate) RosUmdDepthStencilState(desc, hRTDepthStencilState);
+    //pDepthStencilState; // unused
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(desc);
+    UNREFERENCED_PARAMETER(hDepthStencilState);
+    UNREFERENCED_PARAMETER(hRTDepthStencilState);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroyDepthStencilState(
@@ -569,12 +576,12 @@ void APIENTRY RosUmdDeviceDdi::DdiDestroyDepthStencilState(
     D3D10DDI_HDEPTHSTENCILSTATE hDepthStencilState)
 {
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdDepthStencilState * pDepthStencilState = RosUmdDepthStencilState::CastFrom(hDepthStencilState);
+    //RosUmdDepthStencilState * pDepthStencilState = RosUmdDepthStencilState::CastFrom(hDepthStencilState);
 
     //pDevice; // unusd
-    pDepthStencilState; // unused
+    //pDepthStencilState; // unused
     UNREFERENCED_PARAMETER(hDevice);
-
+    UNREFERENCED_PARAMETER(hDepthStencilState);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiSetDepthStencilState(
@@ -583,11 +590,11 @@ void APIENTRY RosUmdDeviceDdi::DdiSetDepthStencilState(
     UINT StencilRef)
 {
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdDepthStencilState * pDepthStencilState = RosUmdDepthStencilState::CastFrom(hDepthStencilState);
+    //RosUmdDepthStencilState * pDepthStencilState = RosUmdDepthStencilState::CastFrom(hDepthStencilState);
     //pDevice->SetDepthStencilState(pDepthStencilState, StencilRef);
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hDepthStencilState);
     UNREFERENCED_PARAMETER(StencilRef);
-    UNREFERENCED_PARAMETER(pDepthStencilState);
 }
 
 //
@@ -602,7 +609,8 @@ SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcPrivateSamplerSize(
     //pDevice; // unused
     desc; // unused
 
-    return sizeof(RosUmdSampler); UNREFERENCED_PARAMETER(hDevice);
+    return 0; // sizeof(RosUmdSampler);
+    UNREFERENCED_PARAMETER(hDevice);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiCreateSampler(
@@ -614,9 +622,12 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateSampler(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unusd
 
-    RosUmdSampler* pSampler = new (hSampler.pDrvPrivate) RosUmdSampler(desc, hRTSampler);
-    pSampler; // unused
+    //RosUmdSampler* pSampler = new (hSampler.pDrvPrivate) RosUmdSampler(desc, hRTSampler);
+    //pSampler; // unused
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(desc);
+    UNREFERENCED_PARAMETER(hSampler);
+    UNREFERENCED_PARAMETER(hRTSampler);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroySampler(
@@ -626,9 +637,10 @@ void APIENTRY RosUmdDeviceDdi::DdiDestroySampler(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unusd
 
-    RosUmdSampler * pSampler = RosUmdSampler::CastFrom(hSampler);
-    pSampler; // unused
+    //RosUmdSampler * pSampler = RosUmdSampler::CastFrom(hSampler);
+    //pSampler; // unused
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hSampler);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiPSSetSamplers(
@@ -727,7 +739,7 @@ SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcPrivateElementLayoutSize(
     //pDevice; // unused
     pCreate; // unused
 
-    return sizeof(RosUmdElementLayout);
+    return 0; // sizeof(RosUmdElementLayout);
     UNREFERENCED_PARAMETER(pCreate);
     UNREFERENCED_PARAMETER(hDevice);
 }
@@ -741,9 +753,12 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateElementLayout(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unused
 
-    RosUmdElementLayout* pElementLayout = new (hElementLayout.pDrvPrivate) RosUmdElementLayout(pCreate, hRTElementLayout);
-    pElementLayout; // unused
+    //RosUmdElementLayout* pElementLayout = new (hElementLayout.pDrvPrivate) RosUmdElementLayout(pCreate, hRTElementLayout);
+    //pElementLayout; // unused
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(pCreate);
+    UNREFERENCED_PARAMETER(hElementLayout);
+    UNREFERENCED_PARAMETER(hRTElementLayout);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroyElementLayout(
@@ -753,9 +768,10 @@ void APIENTRY RosUmdDeviceDdi::DdiDestroyElementLayout(
    // RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unused
 
-    RosUmdElementLayout * pElementLayout = RosUmdElementLayout::CastFrom(hElementLayout);
-    pElementLayout->~RosUmdElementLayout();
+    //RosUmdElementLayout * pElementLayout = RosUmdElementLayout::CastFrom(hElementLayout);
+    //pElementLayout->~RosUmdElementLayout();
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hElementLayout);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiPsSetConstantBuffers11_1(
@@ -780,11 +796,11 @@ void APIENTRY RosUmdDeviceDdi::DdiIaSetInputLayout(
     D3D10DDI_HDEVICE hDevice,
     D3D10DDI_HELEMENTLAYOUT hElementLayout)
 {
-   // RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdElementLayout * pElementLayout = RosUmdElementLayout::CastFrom(hElementLayout);
+    //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
+    //RosUmdElementLayout * pElementLayout = RosUmdElementLayout::CastFrom(hElementLayout);
     //pDevice->SetElementLayout(pElementLayout);
     UNREFERENCED_PARAMETER(hDevice);
-    UNREFERENCED_PARAMETER(pElementLayout);
+    UNREFERENCED_PARAMETER(hElementLayout);
 }
 
 //
@@ -1143,7 +1159,7 @@ SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcPrivateRenderTargetViewSize(
     //pDevice; // unused
     hDevice; // unused
     pCreate; // unused
-    return sizeof(RosUmdRenderTargetView);
+    return 0; // sizeof(RosUmdRenderTargetView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiCreateRenderTargetView(
@@ -1155,9 +1171,12 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateRenderTargetView(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unused
 
-    RosUmdRenderTargetView * pRenderTargetView = new(hRenderTargetView.pDrvPrivate) RosUmdRenderTargetView(pCreate, hRTRenderTargetView);
-    pRenderTargetView; // unused
+    //RosUmdRenderTargetView * pRenderTargetView = new(hRenderTargetView.pDrvPrivate) RosUmdRenderTargetView(pCreate, hRTRenderTargetView);
+    //pRenderTargetView; // unused
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(pCreate);
+    UNREFERENCED_PARAMETER(hRenderTargetView);
+    UNREFERENCED_PARAMETER(hRTRenderTargetView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroyRenderTargetView(
@@ -1167,16 +1186,17 @@ void APIENTRY RosUmdDeviceDdi::DdiDestroyRenderTargetView(
     //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
     //pDevice; // unused
 
-    RosUmdRenderTargetView * pRenderTargetView = RosUmdRenderTargetView::CastFrom(hRenderTargetView);
-    pRenderTargetView->~RosUmdRenderTargetView();
+    //RosUmdRenderTargetView * pRenderTargetView = RosUmdRenderTargetView::CastFrom(hRenderTargetView);
+    //pRenderTargetView->~RosUmdRenderTargetView();
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hRenderTargetView);
 }
 
 SIZE_T APIENTRY RosUmdDeviceDdi::DdiCalcPrivateDepthStencilViewSize11(
     D3D10DDI_HDEVICE,
     const D3D11DDIARG_CREATEDEPTHSTENCILVIEW*)
 {
-    return sizeof(RosUmdDepthStencilView);
+    return 0; // sizeof(RosUmdDepthStencilView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiCreateDepthStencilView11(
@@ -1185,16 +1205,20 @@ void APIENTRY RosUmdDeviceDdi::DdiCreateDepthStencilView11(
     D3D10DDI_HDEPTHSTENCILVIEW hDepthStencilView,
     D3D10DDI_HRTDEPTHSTENCILVIEW hRTDepthStencilView)
 {
-    RosUmdDepthStencilView * pDepthStencilView = new(hDepthStencilView.pDrvPrivate) RosUmdDepthStencilView(pCreate, hRTDepthStencilView);
-    pDepthStencilView;  // unused
+    //RosUmdDepthStencilView * pDepthStencilView = new(hDepthStencilView.pDrvPrivate) RosUmdDepthStencilView(pCreate, hRTDepthStencilView);
+    //pDepthStencilView;  // unused
+    UNREFERENCED_PARAMETER(pCreate);
+    UNREFERENCED_PARAMETER(hDepthStencilView);
+    UNREFERENCED_PARAMETER(hRTDepthStencilView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiDestroyDepthStencilView(
     D3D10DDI_HDEVICE,
     D3D10DDI_HDEPTHSTENCILVIEW hDepthStencilView)
 {
-    RosUmdDepthStencilView * pDepthStencilView = RosUmdDepthStencilView::CastFrom(hDepthStencilView);
-    pDepthStencilView->~RosUmdDepthStencilView();
+    //RosUmdDepthStencilView * pDepthStencilView = RosUmdDepthStencilView::CastFrom(hDepthStencilView);
+    //pDepthStencilView->~RosUmdDepthStencilView();
+    UNREFERENCED_PARAMETER(hDepthStencilView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiClearRenderTargetView(
@@ -1202,12 +1226,12 @@ void APIENTRY RosUmdDeviceDdi::DdiClearRenderTargetView(
     D3D10DDI_HRENDERTARGETVIEW hRenderTargetView,
     FLOAT clearColor[4])
 {
-   // RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdRenderTargetView * pRenderTargetView = RosUmdRenderTargetView::CastFrom(hRenderTargetView);
-   // pDevice->ClearRenderTargetView(pRenderTargetView, clearColor);
+    //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
+    //RosUmdRenderTargetView * pRenderTargetView = RosUmdRenderTargetView::CastFrom(hRenderTargetView);
+    //pDevice->ClearRenderTargetView(pRenderTargetView, clearColor);
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hRenderTargetView);
     UNREFERENCED_PARAMETER(clearColor);
-    UNREFERENCED_PARAMETER(pRenderTargetView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiClearDepthStencilView(
@@ -1217,15 +1241,15 @@ void APIENTRY RosUmdDeviceDdi::DdiClearDepthStencilView(
     FLOAT depthValue,
     UINT8 stencilValue)
 {
-   // RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
-    RosUmdDepthStencilView * pDepthStencilView = RosUmdDepthStencilView::CastFrom(hDepthStencilView);
+    //RosUmdDevice * pDevice = RosUmdDevice::CastFrom(hDevice);
+    //RosUmdDepthStencilView * pDepthStencilView = RosUmdDepthStencilView::CastFrom(hDepthStencilView);
 
     //pDevice->ClearDepthStencilView(pDepthStencilView, clearFlags, depthValue, stencilValue);
     UNREFERENCED_PARAMETER(hDevice);
+    UNREFERENCED_PARAMETER(hDepthStencilView);
     UNREFERENCED_PARAMETER(clearFlags);
     UNREFERENCED_PARAMETER(depthValue);
     UNREFERENCED_PARAMETER(stencilValue);
-    UNREFERENCED_PARAMETER(pDepthStencilView);
 }
 
 void APIENTRY RosUmdDeviceDdi::DdiSetRenderTargets(

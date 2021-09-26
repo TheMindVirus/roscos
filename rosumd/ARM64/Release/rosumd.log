@@ -1,23 +1,12 @@
-﻿  Building 'rosumd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
-  Stamping ARM64\Release\Ros.inf
-  Stamping [Version] section with DriverVer=08/31/2021,0.10.8.171
-  precomp.cpp
-  pixlib.cpp
+﻿  Building 'RosUmd' with toolset 'WindowsUserModeDriver10.0' and the 'Universal' target platform.
   RosUmd.cpp
-  RosUmdAdapter.cpp
-  RosUmdCommandBuffer.cpp
-  RosUmdDevice.cpp
-  RosUmdDeviceDdi.cpp
-  RosUmdResource.cpp
-  RosUmdShader.cpp
-  RosUmdUtil.cpp
-  RosUmdLogging.cpp
-     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\rosumd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\rosumd.exp
+     Creating library C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.lib and object C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.exp
   Generating code
   Finished generating code
-  rosumd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\rosumd.dll
+  RosUmd.vcxproj -> C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.dll
   Done Adding Additional Store
-  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd2\ARM64\Release\rosumd.dll
+  Successfully signed: C:\Users\Alastair\Documents\Visual Studio 2019\Projects\rosumd5\ARM64\Release\RosUmd.dll
   
+  Driver is 'Universal'.
   Inf2Cat task was skipped as there were no inf files to process
   

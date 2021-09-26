@@ -1,54 +1,33 @@
 #pragma once
 
 #define DBG   1
-#define debug(...) \
+#define debug(...)   \
 	KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, __VA_ARGS__)); \
-	KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "\n"));
+    KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, "\n"));
+//#define debug(...)
 
-////////////////////////////////////////////////////////////////////////////////////////////
-// 
-//
-// Header used to include <d3dumddi.h>
-//
-// This header takes care of the various dependencies needed by d3dumddi.h
-//
+#include <windows.h>
+#include <strsafe.h>
+#include <debugapi.h>
+
 #ifndef PAGE_SIZE
 #define PAGE_SIZE 0x1000
 #endif
-
 #ifndef ROUND_TO_PAGES
 #define ROUND_TO_PAGES(Size)  (((ULONG_PTR)(Size) + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
 #endif
-
 #include <windef.h>
 #include <wingdi.h>
-
 typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
+#pragma warning(push)
 #pragma warning(disable : 4201)
-
-#define D3D12_TOKENIZED_PROGRAM_FORMAT_HEADER
 #include <d3d10umddi.h>
-#undef D3D12_TOKENIZED_PROGRAM_FORMAT_HEADER
 #include <d3d11.h>
+#pragma warning(pop)
 
-#include <stdio.h>
-#include <exception>
-
-#define assert( _exp ) ( ( _exp ) ? true : (\
-    OutputDebugStringW( L"Assertion Failed\n" ),\
-    OutputDebugStringW( #_exp L"\n" ),\
-    DebugBreak() ) ); __assume( _exp )
-
-#define AssertAndAssume(expression) {assert(expression); __analysis_assume(expression);}
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-#include <Windows.h>
-#include <strsafe.h>
-#include <debugapi.h>
-//#include <d3dumddi.h>
 //#include <ntassert.h>
 
+#include <exception>
 #include <typeinfo>
 #include <new>
 
@@ -56,11 +35,21 @@ typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
 #include <math.h>
 #include <intrin.h>
 
-#include "pixel.hpp"
-
-//#pragma warning(disable : 4324)
 #include <wdf.h>
-#pragma comment(lib, "NtosKrnl.lib")
+
+#pragma comment(lib, "msvcrt.lib")
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//RosDevice (stub)
+//#include "RosUmdDevice.h"
+
+class RosUmdDevice //TODO: Remove this abstract definition when RosUmdDevice has been defined
+{
+public:
+    RosUmdDevice(D3D10DDI_HADAPTER, D3D10DDIARG_CREATEDEVICE*) {}
+    void Standup() {}
+};
 
 //RosAllocation
 
@@ -68,9 +57,7 @@ const UINT MAX_DEVICE_ID_LENGTH = 32;
 
 //RosAdapter
 
-//
 // Structure for exchange adapter info between UMD and KMD
-//
 typedef struct _ROSADAPTERINFO
 {
     UINT                m_version;
@@ -80,56 +67,303 @@ typedef struct _ROSADAPTERINFO
 } ROSADAPTERINFO;
 
 #include "RosUmdAdapter.h"
-#include "RosUmdBlendState.h"
-#include "RosUmdDepthStencilState.h"
-#include "RosUmdDepthStencilView.h"
+//#include "RosUmdBlendState.h"
+//#include "RosUmdDepthStencilState.h"
+//#include "RosUmdDepthStencilView.h"
 #include "RosUmdDeviceDdi.h"
-#include "RosUmdElementLayout.h"
-#include "RosUmdRasterizerState.h"
-#include "RosUmdRenderTargetView.h"
-#include "RosUmdSampler.h"
+//#include "RosUmdElementLayout.h"
+//#include "RosUmdRasterizerState.h"
+//#include "RosUmdRenderTargetView.h"
+//#include "RosUmdSampler.h"
 
+typedef enum D3D11_SB_OPCODE_CLASS
+{
+    D3D11_SB_FLOAT_OP,
+    D3D11_SB_INT_OP,
+    D3D11_SB_UINT_OP,
+    D3D11_SB_BIT_OP,
+    D3D11_SB_FLOW_OP,
+    D3D11_SB_TEX_OP,
+    D3D11_SB_DCL_OP,
+} D3D11_SB_OPCODE_CLASS;
 
-//#pragma warning(disable : 4324)
-//#include <wdf.h>
-//pragma comment(lib, "NtosKrnl.lib")
+struct CInstructionInfo
+{
+    //CInstructionInfo() { m_Name = nullptr; }
+    //~CInstructionInfo() {}
 
-/*
-#include <stdio.h>
-#include <Windows.h>
-#include <wdf.h>
+    void Set(BYTE NumDstOperands, BYTE NumSrcOperands, TCHAR* Name, D3D11_SB_OPCODE_CLASS OpClass)
+    {
+        m_NumSrcOperands = NumSrcOperands;
+        m_NumDstOperands = NumDstOperands;
+        m_Name = Name;
+        m_OpClass = OpClass;
+    }
+    TCHAR* m_Name;
+    BYTE            m_NumSrcOperands;
+    BYTE            m_NumDstOperands;
+    D3D11_SB_OPCODE_CLASS m_OpClass;
+};
 
-#undef PVOID
-//#define PVOID SomethingElse
-//#include <d3d.h>
-//#include <d3dumddi.h> //#include <d3d12umddi.h>
+extern CInstructionInfo g_InstructionInfo[D3D10_SB_NUM_OPCODES];
 
-#include <d3d10umddi.h>
-#include <d3d12umddi.h>
-#include <d3d9types.h>
-//#include <d3dcaps.h>
-#include <d3dhal.h>
-#include <d3dkmddi.h>
-#include <d3dkmdt.h>
-#include <d3dkmthk.h>
-#include <d3dukmdt.h>
-#include <d3dumddi.h>
-//#include <dispmprt.h>
-//#include <dxapi.h>
-#include <dxgiddi.h>
-#include <dxgitype.h>
-#include <dxva.h>
-//#include <iddcx.h>
-#include <igpupvdev.h>
-//#include <netdispumdddi.h>
-//#include <ntddvdeo.h>
-//#include <umdprovider.h>
-//#include <video.h>
-//#include <videoagp.h>
+#define D3D_OPCODE_SET(OpCode, NumDstOperands, NumSrcOperands, Name, OpClass) \
+    (g_InstructionInfo[OpCode].Set(NumDstOperands, NumSrcOperands, Name, OpClass))
 
-#include <guiddef.h>
-#include <initguid.h>
-#include <ntddvdeo.h>
+static inline void InitInstructionInfo()
+{
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ADD, 1, 2, TEXT("add"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_AND, 1, 2, TEXT("and"), D3D11_SB_BIT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_BREAK, 0, 0, TEXT("break"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_BREAKC, 0, 1, TEXT("breakc"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CALL, 0, 1, TEXT("call"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CALLC, 0, 2, TEXT("callc"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CONTINUE, 0, 0, TEXT("continue"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CONTINUEC, 0, 1, TEXT("continuec"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CASE, 0, 1, TEXT("case"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CUT, 0, 0, TEXT("cut"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_CUSTOMDATA, 0, 0, TEXT("customdata"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DEFAULT, 0, 0, TEXT("default"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DISCARD, 0, 1, TEXT("discard"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DIV, 1, 2, TEXT("div"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DP2, 1, 2, TEXT("dp2"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DP3, 1, 2, TEXT("dp3"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DP4, 1, 2, TEXT("dp4"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ELSE, 0, 0, TEXT("else"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_EMIT, 0, 0, TEXT("emit"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_EMITTHENCUT, 0, 0, TEXT("emit_then_cut"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ENDIF, 0, 0, TEXT("endif"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ENDLOOP, 0, 0, TEXT("endloop"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ENDSWITCH, 0, 0, TEXT("endswitch"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_EQ, 1, 2, TEXT("eq"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_EXP, 1, 1, TEXT("exp"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_FRC, 1, 1, TEXT("frc"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_FTOI, 1, 1, TEXT("ftoi"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_FTOU, 1, 1, TEXT("ftou"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_GE, 1, 2, TEXT("ge"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DERIV_RTX, 1, 1, TEXT("rtx"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DERIV_RTY, 1, 1, TEXT("rty"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IADD, 1, 2, TEXT("iadd"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IF, 0, 1, TEXT("if"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IEQ, 1, 2, TEXT("ieq"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IGE, 1, 2, TEXT("ige"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ILT, 1, 2, TEXT("ilt"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IMAD, 1, 3, TEXT("imad"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IMAX, 1, 2, TEXT("imax"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IMIN, 1, 2, TEXT("imin"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_IMUL, 2, 2, TEXT("imul"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_INE, 1, 2, TEXT("ine"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_INEG, 1, 1, TEXT("ineg"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ISHL, 1, 2, TEXT("ishl"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ISHR, 1, 2, TEXT("ishr"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ITOF, 1, 1, TEXT("itof"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LABEL, 0, 1, TEXT("label"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LD, 1, 2, TEXT("ld"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LD_MS, 1, 3, TEXT("ldms"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LOG, 1, 1, TEXT("log"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LOOP, 0, 0, TEXT("loop"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_LT, 1, 2, TEXT("lt"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MAD, 1, 3, TEXT("mad"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MAX, 1, 2, TEXT("max"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MIN, 1, 2, TEXT("min"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MOV, 1, 1, TEXT("mov"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MOVC, 1, 3, TEXT("movc"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_MUL, 1, 2, TEXT("mul"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_NE, 1, 2, TEXT("ne"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_NOP, 0, 0, TEXT("nop"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_NOT, 1, 1, TEXT("not"), D3D11_SB_BIT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_OR, 1, 2, TEXT("or"), D3D11_SB_BIT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_RESINFO, 1, 2, TEXT("resinfo"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_RET, 0, 0, TEXT("ret"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_RETC, 0, 1, TEXT("retc"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ROUND_NE, 1, 1, TEXT("round_ne"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ROUND_NI, 1, 1, TEXT("round_ni"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ROUND_PI, 1, 1, TEXT("round_pi"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ROUND_Z, 1, 1, TEXT("round_z"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_RSQ, 1, 1, TEXT("rsq"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE, 1, 3, TEXT("sample"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE_B, 1, 4, TEXT("sample_b"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE_L, 1, 4, TEXT("sample_l"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE_D, 1, 5, TEXT("sample_d"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE_C, 1, 4, TEXT("sample_c"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SAMPLE_C_LZ, 1, 4, TEXT("sample_c_lz"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SQRT, 1, 1, TEXT("sqrt"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SWITCH, 0, 1, TEXT("switch"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_SINCOS, 1, 2, TEXT("sincos"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UDIV, 2, 2, TEXT("udiv"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_ULT, 1, 2, TEXT("ult"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UGE, 1, 2, TEXT("uge"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UMAX, 1, 2, TEXT("umax"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UMIN, 1, 2, TEXT("umin"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UMUL, 2, 2, TEXT("umul"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UMAD, 1, 3, TEXT("umad"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_USHR, 1, 2, TEXT("ushr"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_UTOF, 1, 1, TEXT("utof"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_XOR, 1, 2, TEXT("xor"), D3D11_SB_BIT_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_RESERVED0, 0, 0, TEXT("jmp"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT, 0, 1, TEXT("dcl_input"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_OUTPUT, 0, 1, TEXT("dcl_output"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT_SGV, 0, 1, TEXT("dcl_input_sgv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT_PS_SGV, 0, 1, TEXT("dcl_input_sgv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_GS_INPUT_PRIMITIVE, 0, 0, TEXT("dcl_inputprimitive"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_GS_OUTPUT_PRIMITIVE_TOPOLOGY, 0, 0, TEXT("dcl_outputtopology"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_MAX_OUTPUT_VERTEX_COUNT, 0, 0, TEXT("dcl_maxout"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT_PS, 0, 1, TEXT("dcl_input"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_CONSTANT_BUFFER, 0, 1, TEXT("dcl_constantbuffer"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_SAMPLER, 0, 1, TEXT("dcl_sampler"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_RESOURCE, 0, 1, TEXT("dcl_resource"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT_SIV, 0, 1, TEXT("dcl_input_siv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INPUT_PS_SIV, 0, 1, TEXT("dcl_input_siv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_OUTPUT_SIV, 0, 1, TEXT("dcl_output_siv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_OUTPUT_SGV, 0, 1, TEXT("dcl_output_sgv"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_TEMPS, 0, 0, TEXT("dcl_temps"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INDEXABLE_TEMP, 0, 0, TEXT("dcl_indexableTemp"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_INDEX_RANGE, 0, 1, TEXT("dcl_indexrange"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D10_SB_OPCODE_DCL_GLOBAL_FLAGS, 0, 0, TEXT("dcl_globalFlags"), D3D11_SB_DCL_OP);
 
-#include <winddi.h>
-*/
+    D3D_OPCODE_SET(D3D10_1_SB_OPCODE_SAMPLE_INFO, 1, 1, TEXT("sampleinfo"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_1_SB_OPCODE_SAMPLE_POS, 1, 2, TEXT("samplepos"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_1_SB_OPCODE_GATHER4, 1, 3, TEXT("gather4"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D10_1_SB_OPCODE_LOD, 1, 3, TEXT("lod"), D3D11_SB_TEX_OP);
+
+    //
+    // DX11 opcodes
+    //
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_HS_DECLS, 0, 0, TEXT("hs_decls"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_HS_CONTROL_POINT_PHASE, 0, 0, TEXT("hs_control_point_phase"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_HS_FORK_PHASE, 0, 0, TEXT("hs_fork_phase"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_HS_JOIN_PHASE, 0, 0, TEXT("hs_join_phase"), D3D11_SB_DCL_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_INTERFACE_CALL, 0, 1, TEXT("fcall"), D3D11_SB_FLOW_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_BUFINFO, 1, 1, TEXT("bufinfo"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DERIV_RTX_COARSE, 1, 1, TEXT("deriv_rtx_coarse"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DERIV_RTX_FINE, 1, 1, TEXT("deriv_rtx_fine"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DERIV_RTY_COARSE, 1, 1, TEXT("deriv_rty_coarse"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DERIV_RTY_FINE, 1, 1, TEXT("deriv_rty_fine"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_GATHER4_C, 1, 4, TEXT("gather4_c"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_GATHER4_PO, 1, 4, TEXT("gather4_po"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_GATHER4_PO_C, 1, 5, TEXT("gather4_po_c"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_RCP, 1, 1, TEXT("rcp"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_F32TOF16, 1, 1, TEXT("f32tof16"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_F16TOF32, 1, 1, TEXT("f16tof32"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_UADDC, 2, 2, TEXT("uaddc"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_USUBB, 2, 2, TEXT("usubb"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_COUNTBITS, 1, 1, TEXT("countbits"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_FIRSTBIT_HI, 1, 1, TEXT("firstbit_hi"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_FIRSTBIT_LO, 1, 1, TEXT("firstbit_lo"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_FIRSTBIT_SHI, 1, 1, TEXT("firstbit_shi"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_UBFE, 1, 3, TEXT("ubfe"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IBFE, 1, 3, TEXT("ibfe"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_BFI, 1, 4, TEXT("bfi"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_BFREV, 1, 1, TEXT("bfrev"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_SWAPC, 2, 3, TEXT("swapc"), D3D11_SB_UINT_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_STREAM, 0, 1, TEXT("dcl_stream"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_FUNCTION_BODY, 0, 0, TEXT("dcl_function_body"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_FUNCTION_TABLE, 0, 0, TEXT("dcl_function_table "), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_INTERFACE, 0, 0, TEXT("dcl_interface"), D3D11_SB_DCL_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_INPUT_CONTROL_POINT_COUNT, 0, 1, TEXT("dcl_input_control_point_count"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_OUTPUT_CONTROL_POINT_COUNT, 0, 1, TEXT("dcl_output_control_point_count"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_TESS_DOMAIN, 0, 1, TEXT("dcl_tessellator_domain"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_TESS_PARTITIONING, 0, 1, TEXT("dcl_tessellator_partitioning"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_TESS_OUTPUT_PRIMITIVE, 0, 1, TEXT("dcl_tessellator_output_primitive"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_HS_MAX_TESSFACTOR, 0, 1, TEXT("dcl_hs_max_tessfactor"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_HS_FORK_PHASE_INSTANCE_COUNT, 0, 1, TEXT("dcl_hs_fork_phase_instance_count"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_HS_JOIN_PHASE_INSTANCE_COUNT, 0, 1, TEXT("dcl_hs_join_phase_instance_count"), D3D11_SB_DCL_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_THREAD_GROUP, 0, 3, TEXT("dcl_thread_group"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_UNORDERED_ACCESS_VIEW_TYPED, 0, 3, TEXT("dcl_uav_typed"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_UNORDERED_ACCESS_VIEW_RAW, 0, 1, TEXT("dcl_uav_raw"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_UNORDERED_ACCESS_VIEW_STRUCTURED, 0, 2, TEXT("dcl_uav_structured"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_THREAD_GROUP_SHARED_MEMORY_RAW, 0, 2, TEXT("dcl_tgsm_raw"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_THREAD_GROUP_SHARED_MEMORY_STRUCTURED, 0, 3, TEXT("dcl_tgsm_structured"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_RESOURCE_RAW, 0, 1, TEXT("dcl_resource_raw"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_RESOURCE_STRUCTURED, 0, 2, TEXT("dcl_resource_structured"), D3D11_SB_DCL_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_LD_UAV_TYPED, 1, 2, TEXT("ld_uav_typed"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_STORE_UAV_TYPED, 1, 2, TEXT("store_uav_typed"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_LD_RAW, 1, 2, TEXT("ld_raw"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_STORE_RAW, 1, 2, TEXT("store_raw"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_LD_STRUCTURED, 1, 3, TEXT("ld_structured"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_STORE_STRUCTURED, 1, 3, TEXT("store_structured"), D3D11_SB_TEX_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_AND, 1, 2, TEXT("atomic_and"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_OR, 1, 2, TEXT("atomic_or"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_XOR, 1, 2, TEXT("atomic_xor"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_CMP_STORE, 1, 3, TEXT("atomic_cmp_store"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_IADD, 1, 2, TEXT("atomic_iadd"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_IMAX, 1, 2, TEXT("atomic_imax"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_IMIN, 1, 2, TEXT("atomic_imin"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_UMAX, 1, 2, TEXT("atomic_umax"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ATOMIC_UMIN, 1, 2, TEXT("atomic_umin"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_ALLOC, 1, 1, TEXT("imm_atomic_alloc"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_CONSUME, 1, 1, TEXT("imm_atomic_consume"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_IADD, 2, 2, TEXT("imm_atomic_iadd"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_AND, 2, 2, TEXT("imm_atomic_and"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_OR, 2, 2, TEXT("imm_atomic_or"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_XOR, 2, 2, TEXT("imm_atomic_xor"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_EXCH, 2, 2, TEXT("imm_atomic_exch"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_CMP_EXCH, 2, 3, TEXT("imm_atomic_cmp_exch"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_IMAX, 2, 2, TEXT("imm_atomic_imax"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_IMIN, 2, 2, TEXT("imm_atomic_imin"), D3D11_SB_INT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_UMAX, 2, 2, TEXT("imm_atomic_umax"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_IMM_ATOMIC_UMIN, 2, 2, TEXT("imm_atomic_umin"), D3D11_SB_UINT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_SYNC, 0, 0, TEXT("sync"), D3D11_SB_FLOW_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DADD, 1, 2, TEXT("dadd"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DMAX, 1, 2, TEXT("dmax"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DMIN, 1, 2, TEXT("dmin"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DMUL, 1, 2, TEXT("dmul"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DEQ, 1, 2, TEXT("deq"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DGE, 1, 2, TEXT("dge"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DLT, 1, 2, TEXT("dlt"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DNE, 1, 2, TEXT("dne"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DMOV, 1, 1, TEXT("dmov"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DMOVC, 1, 3, TEXT("dmovc"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DTOF, 1, 1, TEXT("dtof"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_FTOD, 1, 1, TEXT("ftod"), D3D11_SB_FLOAT_OP);
+
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_DDIV, 1, 2, TEXT("ddiv"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_DFMA, 1, 3, TEXT("dfma"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_DRCP, 1, 1, TEXT("drcp"), D3D11_SB_FLOAT_OP);
+
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_MSAD, 1, 3, TEXT("msad"), D3D11_SB_UINT_OP);
+
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_DTOI, 1, 1, TEXT("dtoi"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_DTOU, 1, 1, TEXT("dtou"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_ITOD, 1, 1, TEXT("itod"), D3D11_SB_FLOAT_OP);
+    D3D_OPCODE_SET(D3D11_1_SB_OPCODE_UTOD, 1, 1, TEXT("utod"), D3D11_SB_FLOAT_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_EVAL_SNAPPED, 1, 2, TEXT("eval_snapped"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_EVAL_SAMPLE_INDEX, 1, 2, TEXT("eval_sample_index"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_EVAL_CENTROID, 1, 1, TEXT("eval_centroid"), D3D11_SB_TEX_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DCL_GS_INSTANCE_COUNT, 0, 0, TEXT("dcl_input"), D3D11_SB_DCL_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_EMIT_STREAM, 0, 1, TEXT("emit_stream"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_CUT_STREAM, 0, 1, TEXT("cut_stream"), D3D11_SB_FLOW_OP);
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_EMITTHENCUT_STREAM, 0, 1, TEXT("emitThenCut_stream"), D3D11_SB_FLOW_OP);
+
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_ABORT, 0, 0, TEXT("abort"), D3D11_SB_FLOW_OP); //TODO: correct this
+    D3D_OPCODE_SET(D3D11_SB_OPCODE_DEBUG_BREAK, 0, 0, TEXT("debug_break"), D3D11_SB_FLOW_OP); //TODO: correct this
+
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_GATHER4_FEEDBACK, 2, 3, TEXT("gather4_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_GATHER4_C_FEEDBACK, 2, 4, TEXT("gather4_c_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_GATHER4_PO_FEEDBACK, 2, 4, TEXT("gather4_po_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_GATHER4_PO_C_FEEDBACK, 2, 5, TEXT("gather4_po_c_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_LD_FEEDBACK, 2, 2, TEXT("ld_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_LD_MS_FEEDBACK, 2, 3, TEXT("ldms_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_LD_UAV_TYPED_FEEDBACK, 2, 2, TEXT("ld_uav_typed_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_LD_RAW_FEEDBACK, 2, 2, TEXT("ld_raw_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_LD_STRUCTURED_FEEDBACK, 2, 3, TEXT("ld_structured_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_L_FEEDBACK, 2, 4, TEXT("sample_l_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_C_LZ_FEEDBACK, 2, 4, TEXT("sample_c_lz_fb"), D3D11_SB_TEX_OP);
+
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_CLAMP_FEEDBACK, 2, 4, TEXT("sample_clamp_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_B_CLAMP_FEEDBACK, 2, 5, TEXT("sample_clamp_b_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_D_CLAMP_FEEDBACK, 2, 6, TEXT("sample_clamp_d_fb"), D3D11_SB_TEX_OP);
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_SAMPLE_C_CLAMP_FEEDBACK, 2, 5, TEXT("sample_clamp_c_fb"), D3D11_SB_TEX_OP);
+
+    D3D_OPCODE_SET(D3DWDDM1_3_SB_OPCODE_CHECK_ACCESS_FULLY_MAPPED, 1, 1, TEXT("checkAccess"), D3D11_SB_UINT_OP);
+}
