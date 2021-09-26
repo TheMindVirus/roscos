@@ -3,9 +3,10 @@ Visual Studio 2019 Compiled Source Directories of Windows Render/Compute-Only-Sa
 
 ## rosumd6-dev Branch Notes
  * Stubs have been added for the RosUmdDevice C++ Class which handles draw calls. These are yet to be filled in.
- * The Standard C/C++ `new` and `delete` keywords have been scrapped, in turn destroying a lot of source code. \
+ * The Standard C/C++ `new` and `delete` keywords have been scrapped, in turn destroying a lot of source code.
    - In KMDF these have been replaced by `ExAllocatePoolWithTag()` and `ExFreePool()`.
    - In UMDFv2 these have been replaced by `malloc()` and `free()`.
+   - In a Win32 application (especially e.g. Python) the user is not made aware of new and delete at all.
    - The `memset()` method is unresolved, so all occurrences have been replaced by for loops.
    - Several other intrinsics are unresolved in `msvcrt.lib`, so stubs have been created for them where possible.
  * The Driver has been tested to compile, load, receive draw calls and unload cleanly.
